@@ -8,23 +8,8 @@
 
 import UIKit
 
-class AlbumTableViewController: UITableViewController, iTunesAlbumDelegate {
-    let model = DataManager.shared.model
-    var collectionID:Int?
-    var trackID:Int?
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        model.albumDelegate = self
-    }
-
-    // MARK: - Model delegate
-    
-    func albumDidLoad() {
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
-    }
+class AlbumTableViewController: UITableViewController {
+    let model = iTunesList.model
     
     // MARK: - Table view data source
 
@@ -54,7 +39,7 @@ class AlbumTableViewController: UITableViewController, iTunesAlbumDelegate {
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: cellTrackIdentifier, for: indexPath) as! AlbumTrackCell
             cell.configureCell(item: item)
-            cell.checkTrack(self.trackID == item.trackId)
+            cell.checkTrack(model.previewItem.trackId == item.trackId)
             return cell
         }
     }

@@ -41,7 +41,7 @@ class SearchCell: UITableViewCell {
         self.songTimeLabel?.text = item.trackLenght()
 
         self.artworkImageView?.image = self.noArtworkImage;
-        DataManager.downloadImage(path: item.artworkUrl100!) { (image) in
+        NetworkManager.downloadImage(path: item.artworkUrl100!) { (image) in
             self.artworkImageView.image = image
             self.layoutIfNeeded()
         }
@@ -54,7 +54,6 @@ class SearchCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

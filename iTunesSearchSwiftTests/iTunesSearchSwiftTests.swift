@@ -9,10 +9,22 @@
 import XCTest
 @testable import iTunesSearchSwift
 
+
 class iTunesSearchSwiftTests: XCTestCase {
+
+    var searchTableViewController: SearchTableViewController!
+    var trackViewController: TrackViewController!
+    var albumTableViewController :AlbumTableViewController!
     
     override func setUp() {
         super.setUp()
+        
+       let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        searchTableViewController =  storyboard.instantiateViewController(withIdentifier: "SearchTableViewController") as! SearchTableViewController
+        trackViewController =  storyboard.instantiateViewController(withIdentifier: "TrackViewController") as! TrackViewController
+        albumTableViewController =  storyboard.instantiateViewController(withIdentifier: "AlbumTableViewController") as! AlbumTableViewController
+        
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
     

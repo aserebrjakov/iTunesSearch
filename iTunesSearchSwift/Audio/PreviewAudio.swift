@@ -57,7 +57,7 @@ class PreviewAudio: NSObject, AVAudioPlayerDelegate  {
     
     func beginDownload() {
         self.delegate?.playerBeginDownloadSong()
-        DataManager.downloadPrewiewSong(previewURL: self.previewUrl!) { (url) in
+        NetworkManager.downloadPrewiewSong(previewURL: self.previewUrl!) { (url) in
             self.startAudioPlayer(previewFileURL:url)
         }
     }

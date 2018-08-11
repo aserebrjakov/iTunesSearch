@@ -18,10 +18,9 @@ class ImageCache {
     }()
 }
 
-class DataManager: NSObject {
+class NetworkManager: NSObject {
     
-    var model:iTunesList = iTunesList()
-    static let shared = DataManager()
+    static let shared = NetworkManager()
     let session:URLSession
     
     override init() {

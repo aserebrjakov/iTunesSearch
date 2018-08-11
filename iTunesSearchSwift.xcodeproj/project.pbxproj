@@ -11,7 +11,7 @@
 		880B4A11210C953F00A80F93 /* AlbumHeaderCelll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880B4A10210C953F00A80F93 /* AlbumHeaderCelll.swift */; };
 		880B4A13210C98E400A80F93 /* TrackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880B4A12210C98E400A80F93 /* TrackView.swift */; };
 		880D2AFD20FC93A400F2E04F /* PreviewAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880D2AFC20FC93A400F2E04F /* PreviewAudio.swift */; };
-		880D2B0020FCEA5000F2E04F /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880D2AFF20FCEA5000F2E04F /* DataManager.swift */; };
+		880D2B0020FCEA5000F2E04F /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880D2AFF20FCEA5000F2E04F /* NetworkManager.swift */; };
 		886DBD0C21077123000A461B /* AlbumTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886DBD0B21077123000A461B /* AlbumTableViewController.swift */; };
 		88734F2E210490B800B74881 /* iTunesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88734F2D210490B800B74881 /* iTunesList.swift */; };
 		88A41FA320EF98A900017850 /* iTunesItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A41FA220EF98A900017850 /* iTunesItem.swift */; };
@@ -47,7 +47,7 @@
 		880B4A10210C953F00A80F93 /* AlbumHeaderCelll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumHeaderCelll.swift; sourceTree = "<group>"; };
 		880B4A12210C98E400A80F93 /* TrackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackView.swift; sourceTree = "<group>"; };
 		880D2AFC20FC93A400F2E04F /* PreviewAudio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewAudio.swift; sourceTree = "<group>"; };
-		880D2AFF20FCEA5000F2E04F /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		880D2AFF20FCEA5000F2E04F /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		886DBD0B21077123000A461B /* AlbumTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumTableViewController.swift; sourceTree = "<group>"; };
 		88734F2D210490B800B74881 /* iTunesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iTunesList.swift; sourceTree = "<group>"; };
 		88A41FA220EF98A900017850 /* iTunesItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iTunesItem.swift; sourceTree = "<group>"; };
@@ -115,7 +115,7 @@
 			children = (
 				88A41FA220EF98A900017850 /* iTunesItem.swift */,
 				88734F2D210490B800B74881 /* iTunesList.swift */,
-				880D2AFF20FCEA5000F2E04F /* DataManager.swift */,
+				880D2AFF20FCEA5000F2E04F /* NetworkManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -247,7 +247,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0920;
-				LastUpgradeCheck = 0920;
+				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = iMac;
 				TargetAttributes = {
 					88BFF79520E8E9FC003042E2 = {
@@ -323,7 +323,7 @@
 				886DBD0C21077123000A461B /* AlbumTableViewController.swift in Sources */,
 				88B3D5E120EE7BC60075FAAA /* TrackViewController.swift in Sources */,
 				880B4A11210C953F00A80F93 /* AlbumHeaderCelll.swift in Sources */,
-				880D2B0020FCEA5000F2E04F /* DataManager.swift in Sources */,
+				880D2B0020FCEA5000F2E04F /* NetworkManager.swift in Sources */,
 				88BFF7C820E8ED46003042E2 /* SearchTableViewController.swift in Sources */,
 				880D2AFD20FC93A400F2E04F /* PreviewAudio.swift in Sources */,
 				88A41FA320EF98A900017850 /* iTunesItem.swift in Sources */,
@@ -397,6 +397,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -404,6 +405,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -454,6 +456,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -461,6 +464,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;

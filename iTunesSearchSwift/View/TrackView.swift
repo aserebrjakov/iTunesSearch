@@ -8,6 +8,17 @@
 
 import UIKit
 
+extension Optional {
+    func asStringOrEmpty() -> String {
+        switch self {
+        case .some(let value):
+            return String(describing: value)
+        case _:
+            return ""
+        }
+    }
+}
+
 @IBDesignable
 
 extension UINavigationItem {
@@ -19,8 +30,17 @@ extension UINavigationItem {
         let label = UILabel()
         label.backgroundColor = .clear
         label.textAlignment = .center
-        label.numberOfLines = 2
-        label.addAttributedString(name: itemName, string: itemAlbum, separate: "\n", fontSize: 16, nameColor: .white, stringColor: .white)
+        
+        switch UIDevice.current.orientation{
+            case .landscapeLeft, .landscapeRight: do {
+                    label.numberOfLines = 1
+                    label.addAttributedString(name: itemName, string: itemAlbum, separate: " - ", fontSize: 13, nameColor: .white, stringColor: .white)
+                }
+            default: do {
+                    label.numberOfLines = 2
+                    label.addAttributedString(name: itemName, string: itemAlbum, separate: "\n", fontSize: 16, nameColor: .white, stringColor: .white)
+                }
+        }
         self.titleView = label
     }
 }
@@ -82,6 +102,8 @@ class PlayerButton : UIButton {
 
 class TrackView : UIView, PreviewAudioDelegate {
     
+    var item:iTunesItem?
+    
     @IBOutlet weak var trackNameLabel: UILabel!
     @IBOutlet weak var authorNameLabel: UILabel!
     @IBOutlet weak var collectionNameLabel: UILabel!
@@ -95,27 +117,30 @@ class TrackView : UIView, PreviewAudioDelegate {
     }
     
     func updateView(item:iTunesItem) {
+        self.item = item
         self.trackInfoLabel?.text = "Загрузить фрагмент"
-        self.trackNameLabel?.text = item.fullTrackNumber() + "  " + item.trackName!
+        self.trackNameLabel?.text = item.fullTrackNumber + "  " + item.trackName.asStringOrEmpty()
         self.authorNameLabel?.text = item.artistName
         
-        if item.longDescription != nil {
-            self.collectionNameLabel?.text = item.longDescription!
+        if item.info.longDescription != nil {
+            self.collectionNameLabel?.text = item.info.longDescription!
+            self.collectionNameLabel?.font = UIFont.systemFont(ofSize:16)
         } else {
             self.collectionNameLabel?.text = item.collectionName!
+            self.collectionNameLabel?.font = UIFont.systemFont(ofSize:21)
         }
         
         //Загрузка из кэша маленькой картинки
-        DataManager.downloadImage(path: item.artworkUrl100!) { (image) in
+        NetworkManager.downloadImage(path: item.artworkUrl100!) { (image) in
             self.artworkImageView?.image = image
         }
         
         //Загрузка большой картинки
-        DataManager.downloadImage(path: item.artworkUrl600) { (image) in
+        NetworkManager.downloadImage(path: item.artworkUrl600) { (image) in
             self.artworkImageView?.image = image
             self.artworkImageView?.alpha = 1.0
         }
-        self.setNeedsLayout()
+        self.layoutIfNeeded()
     }
     
     // MARK: - PreviewAudioDelegate

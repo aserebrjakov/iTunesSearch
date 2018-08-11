@@ -19,8 +19,12 @@ protocol iTunesAlbumDelegate: AnyObject {
 }
 
 class iTunesList: NSObject {
+    
+    static let model = iTunesList()
+    
     private var searchList: Array<iTunesItem> = []
     private var albumList: Array<iTunesItem> = []
+    private var albumID: Int!
     weak var searchDelegate:iTunesSearchDelegate?
     weak var albumDelegate:iTunesAlbumDelegate?
     
@@ -52,13 +56,19 @@ class iTunesList: NSObject {
     }
     
     func albumSearch(collectionID:Int) {
-        DataManager.albumSearchRequest(collectionID:collectionID) { (responseData) in
+        
+        if let albID = self.albumID, albID == collectionID {return}
+        
+        NetworkManager.albumSearchRequest(collectionID:collectionID) { (responseData) in
+        
+            print(String(data: responseData! as Data, encoding: String.Encoding.utf8) ?? "")
             
             guard let list = iTunesList.data2iTunesList(responseData: responseData, errorBlock: { (message) in
                 print("Ошибка парсера: \(message)")
             }) else {
                 return
             }
+            self.albumID = collectionID
             self.albumList = list
             self.albumDelegate?.albumDidLoad()
         }
@@ -75,9 +85,9 @@ class iTunesList: NSObject {
         }
         
         self.lastSearchString = searchString        
-        DataManager.iTunesSearchRequest(searchString:searchString) { (responseData, searchString) in
+        NetworkManager.iTunesSearchRequest(searchString:searchString) { (responseData, searchString) in
             
-            DataManager.stopNetworkActivityIndicator(searchString == self.lastSearchString)
+            NetworkManager.stopNetworkActivityIndicator(searchString == self.lastSearchString)
             
             guard let list = iTunesList.data2iTunesList(responseData: responseData, errorBlock: { (message) in
                 self.searchDelegate?.showClearList(message:message)

@@ -16,7 +16,7 @@ extension UILabel {
         
         let nameAttributes = [
             NSAttributedStringKey.foregroundColor: nameColor,
-            NSAttributedStringKey.font: UIFont.systemFont(ofSize: fontSize, weight: UIFont.Weight.medium)]
+            NSAttributedStringKey.font: UIFont.systemFont(ofSize: fontSize, weight: UIFont.Weight.semibold)]
     
         let attrString = NSMutableAttributedString (string:name, attributes:nameAttributes)
         
@@ -43,12 +43,12 @@ class AlbumHeaderCell: UITableViewCell {
         
         self.collectionNameLabel.addAttributedString(name:"Альбом:", string:item.collectionName!)
         self.artistNameLabel.addAttributedString(name:"Артист:", string:item.artistName!)
-        self.genreLabel.addAttributedString(name:"Жанр:", string:item.primaryGenreName!)
-        self.countryLabel.addAttributedString(name:"Страна:", string:item.country!)
+        self.genreLabel.addAttributedString(name:"Жанр:", string:item.info.genreName!)
+        self.countryLabel.addAttributedString(name:"Страна:", string:item.info.country!)
         self.releaseDateLabel.addAttributedString(name:"Год:", string:item.year)
         
         self.artworkImageView?.image = UIImage(named:"noArtwork")
-        DataManager.downloadImage(path: item.artworkUrl600) { (image) in
+        NetworkManager.downloadImage(path: item.artworkUrl600) { (image) in
             self.artworkImageView.image = image
             self.layoutIfNeeded()
         }
@@ -62,7 +62,7 @@ class AlbumHeaderCell: UITableViewCell {
 class AlbumTrackCell : UITableViewCell {
     
     func configureCell(item: iTunesItem!) {
-        self.textLabel!.text = String("\(item.fullTrackNumber())  \(item.trackName!)")
+        self.textLabel!.text = String("\(item.fullTrackNumber)  \(item.trackName!)")
         self.detailTextLabel!.text = item.trackLenght()
     }
     

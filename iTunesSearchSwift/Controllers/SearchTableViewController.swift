@@ -32,7 +32,7 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, iTu
     @IBOutlet var searchBar: UISearchBar!
     
     var clearListTableViewController:ClearListTableViewController = ClearListTableViewController()
-    let model = DataManager.shared.model
+    let model = iTunesList.model
     
     override func viewDidLoad() {
         super.viewDidLoad()
