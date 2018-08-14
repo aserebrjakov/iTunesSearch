@@ -9,13 +9,31 @@
 import UIKit
 
 class ImageCache {
-    static let shared: NSCache = { () -> NSCache<NSString, UIImage> in
+    private static let shared: NSCache = { () -> NSCache<NSString, UIImage> in
         let cache = NSCache<NSString, UIImage>()
         cache.name = "ImageCache"
         cache.countLimit = 100 // Максимальное количество изображений в памяти - 100
         cache.totalCostLimit = 10*1024*1024 // Максимальный объем памяти 10 Мб 
         return cache
     }()
+    
+    static func costFor(image: UIImage) -> Int {
+        guard let imageRef = image.cgImage else {
+            return 0
+        }
+        return imageRef.bytesPerRow * imageRef.height // Cost in bytes
+    }
+    
+    static func imageForKey(_ path: NSString) -> UIImage! {
+        if let imageFromCache = ImageCache.shared.object(forKey: path as NSString) {
+            return imageFromCache
+        }
+        return nil
+    }
+    
+    static func addImageForKey(_ path: NSString, image: UIImage) {
+        ImageCache.shared.setObject(image, forKey: path as NSString, cost:self.costFor(image: image))
+    }
 }
 
 class NetworkManager: NSObject {
@@ -66,6 +84,9 @@ class NetworkManager: NSObject {
     static func albumSearchRequest(collectionID: Int, block:@escaping (_ dataResponse:Data?) -> ()) {
         let collection = String(collectionID)
         let path = String(format:"\(mainURL)lookup?id=\(collection)&entity=song")
+        
+        self.runNetworkActivityIndicator()
+        
         let url = URL(string:path)
         let request = URLRequest(url:url!, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 20)
         let searchRequest = self.shared.session.dataTask(with: request, completionHandler: {(data, response, error) in
@@ -80,9 +101,7 @@ class NetworkManager: NSObject {
         let escapedString = params.addingPercentEncoding(withAllowedCharacters:NSCharacterSet.urlQueryAllowed)
         let path = String(format:"\(mainURL)search?term=%@&limit=200&offset=%d", escapedString!, 0)
         
-        DispatchQueue.main.async {
-            UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        }
+        self.runNetworkActivityIndicator()
         
         let url = URL(string:path)
         let request = URLRequest(url:url!, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 20)
@@ -90,6 +109,12 @@ class NetworkManager: NSObject {
             block(data, searchString)
         })
         searchRequest.resume()
+    }
+    
+    static func runNetworkActivityIndicator() {
+        DispatchQueue.main.async {
+            UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        }
     }
     
     static func stopNetworkActivityIndicator(_ equal:Bool) {
@@ -108,7 +133,7 @@ class NetworkManager: NSObject {
         }
         
         //проверяем есть ли закешированное изображение, если есть - возвращаем его
-        if let imageFromCache = ImageCache.shared.object(forKey: path as NSString) {
+        if let imageFromCache = ImageCache.imageForKey(path as NSString) {
             DispatchQueue.main.async {
                 block(imageFromCache)
             }
@@ -131,7 +156,7 @@ class NetworkManager: NSObject {
             }
             
             //добавляем закачанное и распарсенное изоображение в кэш
-            ImageCache.shared.setObject(image, forKey: path as NSString, cost:responseData.count)
+            ImageCache.addImageForKey(path as NSString, image: image)
             
             DispatchQueue.main.async {
                 block(image)

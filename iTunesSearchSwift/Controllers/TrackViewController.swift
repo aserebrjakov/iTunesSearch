@@ -10,7 +10,7 @@ import UIKit
 
 class TrackViewController: UIViewController, iTunesAlbumDelegate {
     
-    public let model = iTunesList.model
+    public let model = iTunesModel.model
     var previewAudio:PreviewAudio!
     
     @IBAction func didTapPlayerButton(_ sender: PlayerButton) {

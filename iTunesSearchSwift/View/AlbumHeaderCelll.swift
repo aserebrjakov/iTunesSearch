@@ -43,8 +43,8 @@ class AlbumHeaderCell: UITableViewCell {
         
         self.collectionNameLabel.addAttributedString(name:"Альбом:", string:item.collectionName!)
         self.artistNameLabel.addAttributedString(name:"Артист:", string:item.artistName!)
-        self.genreLabel.addAttributedString(name:"Жанр:", string:item.info.genreName!)
-        self.countryLabel.addAttributedString(name:"Страна:", string:item.info.country!)
+        self.genreLabel.addAttributedString(name:"Жанр:", string:item.genreName!)
+        self.countryLabel.addAttributedString(name:"Страна:", string:item.country!)
         self.releaseDateLabel.addAttributedString(name:"Год:", string:item.year)
         
         self.artworkImageView?.image = UIImage(named:"noArtwork")

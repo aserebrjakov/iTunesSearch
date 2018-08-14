@@ -122,8 +122,8 @@ class TrackView : UIView, PreviewAudioDelegate {
         self.trackNameLabel?.text = item.fullTrackNumber + "  " + item.trackName.asStringOrEmpty()
         self.authorNameLabel?.text = item.artistName
         
-        if item.info.longDescription != nil {
-            self.collectionNameLabel?.text = item.info.longDescription!
+        if item.longDescription != nil {
+            self.collectionNameLabel?.text = item.longDescription!
             self.collectionNameLabel?.font = UIFont.systemFont(ofSize:16)
         } else {
             self.collectionNameLabel?.text = item.collectionName!

@@ -1,2 +1,0 @@
-# iTunesSearch
-Приложение iTunes Search 

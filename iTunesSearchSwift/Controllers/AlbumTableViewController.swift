@@ -9,7 +9,7 @@
 import UIKit
 
 class AlbumTableViewController: UITableViewController {
-    let model = iTunesList.model
+    let model = iTunesModel.model
     
     // MARK: - Table view data source
 

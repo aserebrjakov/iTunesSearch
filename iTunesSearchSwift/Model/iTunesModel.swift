@@ -2,7 +2,7 @@
 //  iTunesList.swift
 //  iTunesSearchSwift
 //
-//  Created by Серебряков Александр on 28.07.2018.
+//  Created by Серебряков Александр on 14.08.2018.
 //  Copyright © 2018. All rights reserved.
 //
 
@@ -18,12 +18,12 @@ protocol iTunesAlbumDelegate: AnyObject {
     func albumDidLoad()
 }
 
-class iTunesList: NSObject {
+class iTunesModel: NSObject {
     
-    static let model = iTunesList()
+    static let model = iTunesModel()
     
-    private var searchList: Array<iTunesItem> = []
-    private var albumList: Array<iTunesItem> = []
+    private var searchList: iTunesList = iTunesList()
+    private var albumList: iTunesList = iTunesList()
     private var albumID: Int!
     weak var searchDelegate:iTunesSearchDelegate?
     weak var albumDelegate:iTunesAlbumDelegate?
@@ -33,26 +33,26 @@ class iTunesList: NSObject {
     var previewItem: iTunesItem!
     
     func searchItem (indexPath:IndexPath) -> iTunesItem? {
-        guard indexPath.row < self.searchList.count else {
+        guard indexPath.row < self.searchList.results.count else {
             return nil
         }
         
-        let item = self.searchList[indexPath.row]
+        let item = self.searchList.results[indexPath.row]
         
         return item
     }
     
     func albumItem (indexPath:IndexPath) -> iTunesItem {
-        let item = self.albumList[indexPath.row]
+        let item = self.albumList.results[indexPath.row]
         return item
     }
     
     func searchItemsCount() -> Int {
-        return self.searchList.count
+        return self.searchList.results.count
     }
     
     func albumItemsCount() -> Int {
-        return self.albumList.count
+        return self.albumList.results.count
     }
     
     func albumSearch(collectionID:Int) {
@@ -61,9 +61,11 @@ class iTunesList: NSObject {
         
         NetworkManager.albumSearchRequest(collectionID:collectionID) { (responseData) in
         
-            print(String(data: responseData! as Data, encoding: String.Encoding.utf8) ?? "")
+            NetworkManager.stopNetworkActivityIndicator(true)
+
+            //print(String(data: responseData! as Data, encoding: String.Encoding.utf8) ?? "")
             
-            guard let list = iTunesList.data2iTunesList(responseData: responseData, errorBlock: { (message) in
+            guard let list = iTunesModel.data2iTunesList(responseData: responseData, errorBlock: { (message) in
                 print("Ошибка парсера: \(message)")
             }) else {
                 return
@@ -89,16 +91,16 @@ class iTunesList: NSObject {
             
             NetworkManager.stopNetworkActivityIndicator(searchString == self.lastSearchString)
             
-            guard let list = iTunesList.data2iTunesList(responseData: responseData, errorBlock: { (message) in
+            guard let list = iTunesModel.data2iTunesList(responseData: responseData, errorBlock: { (message) in
                 self.searchDelegate?.showClearList(message:message)
             }) else {
                 return
             }
             
-            if list.count == 0 {
+            if list.resultCount == 0 {
                 self.searchDelegate?.showClearList(message:"По запросу'\(searchString)' ничего не найдено")
             } else {
-                print("По запросу '\(searchString)' получено \(list.count) треков")
+                print("По запросу '\(searchString)' получено \(list.resultCount) треков")
                 self.searchList = list
                 self.searchDelegate?.showList()
             }
@@ -107,7 +109,7 @@ class iTunesList: NSObject {
     }
     
     //универсальный парсер из Data в массив элементов iTunesItem
-    static func data2iTunesList(responseData:Data?, errorBlock:@escaping (_ message:String) -> () ) -> Array<iTunesItem>? {
+    static func data2iTunesList(responseData:Data?, errorBlock:@escaping (_ message:String) -> () ) -> iTunesList? /* Array<iTunesItem> ?*/ {
         
         guard let data = responseData else {
             errorBlock("Ошибка: пустой ответ")
@@ -115,25 +117,9 @@ class iTunesList: NSObject {
         }
         
         do {
-            //парсим Data в словарь
-            let json:Dictionary = try JSONSerialization.jsonObject(with: data, options: []) as! Dictionary<String, Any>
-            
-            //в валидном ответе мы должны получить два поля: "results" с массивом элементов и "resultCount" с количеством этих элементов
-            guard let results = json["results"] else {
-                errorBlock("Ошибка: полученные данные не являются данными iTunes")
-                return nil
-            }
-            
-            //формируем временный массив, который наполняем объектами
-            var cacheArr:Array<iTunesItem> = []
-            
-            for itemDict in results as! Array<Any> {
-                let item = iTunesItem(dict:itemDict as! Dictionary<String, Any>)
-                cacheArr.append(item)
-            }
-            
-            return cacheArr
-            
+            //парсим Data в Codable объект
+            let list: iTunesList = try JSONDecoder().decode(iTunesList.self, from: data)
+            return list
         } catch {
             errorBlock("Ошибка: полученные данные не являются JSON")
             return nil
