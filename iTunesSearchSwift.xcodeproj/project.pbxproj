@@ -135,6 +135,7 @@
 		88BFF78D20E8E9FC003042E2 = {
 			isa = PBXGroup;
 			children = (
+				A881DEEB21202F8F00A59892 /* README.md */,
 				88BFF79820E8E9FC003042E2 /* iTunesSearchSwift */,
 				88BFF7AD20E8E9FC003042E2 /* iTunesSearchSwiftTests */,
 				88BFF7B820E8E9FC003042E2 /* iTunesSearchSwiftUITests */,
@@ -155,7 +156,6 @@
 		88BFF79820E8E9FC003042E2 /* iTunesSearchSwift */ = {
 			isa = PBXGroup;
 			children = (
-				A881DEEB21202F8F00A59892 /* README.md */,
 				88BFF79920E8E9FC003042E2 /* AppDelegate.swift */,
 				880D2AFE20FCC27B00F2E04F /* Model */,
 				880B4A0B210C8DE500A80F93 /* View */,
