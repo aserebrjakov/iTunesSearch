@@ -13,15 +13,17 @@ class ClearListTableViewController: UITableViewController {
     var message:String!
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 120.0
+        return 150.0
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
     
+    private let notFoundCellIdentifier: String = "NotFoundCell"
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "NotFoundCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: notFoundCellIdentifier, for: indexPath)
         cell.textLabel?.text = self.message
         return cell
     }
@@ -39,7 +41,7 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, iTu
         self.clearListTableViewController.loadView()
         self.searchBar.becomeFirstResponder()
         model.searchDelegate = self;
-        self.model.beginSearch(searchString: "")
+        model.beginSearch(searchString: "")
     }
     
     // MARK: - UITableViewDelegate
@@ -60,9 +62,8 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, iTu
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath) as! SearchCell
-        if let item = model.searchItem(indexPath: indexPath) {
-            cell.configureCell(item: item)
-        }
+        let item = model.searchItem(indexPath: indexPath)
+        cell.configureCell(item)
         return cell
     }
     
@@ -87,8 +88,10 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, iTu
     // MARK: - iTunesSearchDelegate
     
     func showClearList(message:String) {
+    func showClearList(_ message:String) {
         DispatchQueue.main.async {
             self.tableView.dataSource = self.clearListTableViewController
+            self.tableView.delegate = self.clearListTableViewController
             self.clearListTableViewController.message = message
             self.tableView.reloadData()
         }
@@ -97,6 +100,7 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, iTu
     func showList () {
         DispatchQueue.main.async {
             self.tableView.dataSource = self
+            self.tableView.delegate = self
             self.tableView.reloadData()
         }
     }

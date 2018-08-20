@@ -32,7 +32,7 @@ class SearchCell: UITableViewCell {
     
     private let noArtworkImage = UIImage(named:"noArtwork")
     
-    func configureCell(item: iTunesItem!) {
+    func configureCell(_ item: iTunesItem!) {
         
         guard let item = item else { return }
         

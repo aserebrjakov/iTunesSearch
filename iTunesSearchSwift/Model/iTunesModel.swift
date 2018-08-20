@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 protocol iTunesSearchDelegate: AnyObject {
-    func showClearList(message:String)
+    func showClearList(_ message:String)
     func showList()
 }
 
@@ -79,10 +79,10 @@ class iTunesModel: NSObject {
     func beginSearch(searchString:String) {
         
         if searchString.count == 0 {
-            searchDelegate?.showClearList(message:"Введите ключевые слова в строке поиска")
+            searchDelegate?.showClearList("Введите ключевые слова в строке поиска")
             return
         } else if searchString.count < 5 {
-            searchDelegate?.showClearList(message:"В запросе должно быть не менее 5 символов")
+            searchDelegate?.showClearList("В запросе должно быть не менее 5 символов")
             return
         }
         
@@ -92,13 +92,13 @@ class iTunesModel: NSObject {
             NetworkManager.stopNetworkActivityIndicator(searchString == self.lastSearchString)
             
             guard let list = iTunesModel.data2iTunesList(responseData: responseData, errorBlock: { (message) in
-                self.searchDelegate?.showClearList(message:message)
+                self.searchDelegate?.showClearList(message)
             }) else {
                 return
             }
             
             if list.resultCount == 0 {
-                self.searchDelegate?.showClearList(message:"По запросу'\(searchString)' ничего не найдено")
+                self.searchDelegate?.showClearList("По запросу'\(searchString)' ничего не найдено")
             } else {
                 print("По запросу '\(searchString)' получено \(list.resultCount) треков")
                 self.searchList = list

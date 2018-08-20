@@ -140,7 +140,7 @@ class TrackView : UIView, PreviewAudioDelegate {
             self.artworkImageView?.image = image
             self.artworkImageView?.alpha = 1.0
         }
-        self.layoutIfNeeded()
+      //  self.layoutIfNeeded()
     }
     
     // MARK: - PreviewAudioDelegate
