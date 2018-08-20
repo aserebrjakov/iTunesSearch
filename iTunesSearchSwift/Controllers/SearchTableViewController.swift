@@ -87,7 +87,6 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, iTu
     
     // MARK: - iTunesSearchDelegate
     
-    func showClearList(message:String) {
     func showClearList(_ message:String) {
         DispatchQueue.main.async {
             self.tableView.dataSource = self.clearListTableViewController
