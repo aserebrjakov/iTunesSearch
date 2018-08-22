@@ -18,6 +18,11 @@ protocol iTunesAlbumDelegate: AnyObject {
     func albumDidLoad()
 }
 
+enum responceEnum {
+    case complete (iTunesList)
+    case error (String)
+}
+
 class iTunesModel: NSObject {
     
     static let model = iTunesModel()
@@ -65,14 +70,16 @@ class iTunesModel: NSObject {
 
             //print(String(data: responseData! as Data, encoding: String.Encoding.utf8) ?? "")
             
-            guard let list = iTunesModel.data2iTunesList(responseData: responseData, errorBlock: { (message) in
+            let responce:responceEnum = iTunesModel.data2iTunesList(responseData: responseData)
+            switch responce {
+            case let .error (message):
                 print("Ошибка парсера: \(message)")
-            }) else {
-                return
+                break
+            case .complete(let list):
+                self.albumID = collectionID
+                self.albumList = list
+                self.albumDelegate?.albumDidLoad()
             }
-            self.albumID = collectionID
-            self.albumList = list
-            self.albumDelegate?.albumDidLoad()
         }
     }
     
@@ -89,40 +96,41 @@ class iTunesModel: NSObject {
         self.lastSearchString = searchString        
         NetworkManager.iTunesSearchRequest(searchString:searchString) { (responseData, searchString) in
             
-            NetworkManager.stopNetworkActivityIndicator(searchString == self.lastSearchString)
-            
-            guard let list = iTunesModel.data2iTunesList(responseData: responseData, errorBlock: { (message) in
-                self.searchDelegate?.showClearList(message)
-            }) else {
-                return
-            }
-            
-            if list.resultCount == 0 {
-                self.searchDelegate?.showClearList("По запросу'\(searchString)' ничего не найдено")
-            } else {
-                print("По запросу '\(searchString)' получено \(list.resultCount) треков")
-                self.searchList = list
-                self.searchDelegate?.showList()
+            if (searchString == self.lastSearchString) {
+                NetworkManager.stopNetworkActivityIndicator(searchString == self.lastSearchString)
+                
+                let responce:responceEnum = iTunesModel.data2iTunesList(responseData: responseData)
+                
+                switch responce {
+                    case let .error (message):
+                        self.searchDelegate?.showClearList(message as String)
+                        break
+                    case .complete(let list):
+                        if list.resultCount == 0 {
+                            self.searchDelegate?.showClearList("По запросу'\(searchString)' ничего не найдено")
+                        } else {
+                            print("По запросу '\(searchString)' получено \(list.resultCount) треков")
+                            self.searchList = list
+                            self.searchDelegate?.showList()
+                        }
+                }
             }
         }
-        
     }
     
     //универсальный парсер из Data в массив элементов iTunesItem
-    static func data2iTunesList(responseData:Data?, errorBlock:@escaping (_ message:String) -> () ) -> iTunesList? /* Array<iTunesItem> ?*/ {
+    static func data2iTunesList(responseData:Data?) -> responceEnum {
         
         guard let data = responseData else {
-            errorBlock("Ошибка: пустой ответ")
-            return nil
+            return responceEnum.error("Ошибка: пустой ответ")
         }
         
         do {
             //парсим Data в Codable объект
             let list: iTunesList = try JSONDecoder().decode(iTunesList.self, from: data)
-            return list
+            return responceEnum.complete(list)
         } catch {
-            errorBlock("Ошибка: полученные данные не являются JSON")
-            return nil
+            return responceEnum.error("Ошибка: полученные данные не являются JSON")
         }
     }
 }
