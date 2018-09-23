@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		880B4A0F210C8FDF00A80F93 /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880B4A0E210C8FDF00A80F93 /* SearchCell.swift */; };
-		880B4A11210C953F00A80F93 /* AlbumHeaderCelll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880B4A10210C953F00A80F93 /* AlbumHeaderCelll.swift */; };
+		880B4A11210C953F00A80F93 /* AlbumHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880B4A10210C953F00A80F93 /* AlbumHeaderCell.swift */; };
 		880B4A13210C98E400A80F93 /* TrackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880B4A12210C98E400A80F93 /* TrackView.swift */; };
 		880D2AFD20FC93A400F2E04F /* PreviewAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880D2AFC20FC93A400F2E04F /* PreviewAudio.swift */; };
 		880D2B0020FCEA5000F2E04F /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880D2AFF20FCEA5000F2E04F /* NetworkManager.swift */; };
@@ -24,6 +24,8 @@
 		88BFF7BA20E8E9FC003042E2 /* iTunesSearchSwiftUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BFF7B920E8E9FC003042E2 /* iTunesSearchSwiftUITests.swift */; };
 		88BFF7C820E8ED46003042E2 /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BFF7C720E8ED46003042E2 /* SearchTableViewController.swift */; };
 		A881DEEC21202F9000A59892 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = A881DEEB21202F8F00A59892 /* README.md */; };
+		A88940EE2157E4C900D3E6AA /* AlbumTrackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A88940ED2157E4C900D3E6AA /* AlbumTrackCell.swift */; };
+		A88940F02157EEEB00D3E6AA /* iTunesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A88940EF2157EEEB00D3E6AA /* iTunesList.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,7 +47,7 @@
 
 /* Begin PBXFileReference section */
 		880B4A0E210C8FDF00A80F93 /* SearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
-		880B4A10210C953F00A80F93 /* AlbumHeaderCelll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumHeaderCelll.swift; sourceTree = "<group>"; };
+		880B4A10210C953F00A80F93 /* AlbumHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumHeaderCell.swift; sourceTree = "<group>"; };
 		880B4A12210C98E400A80F93 /* TrackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackView.swift; sourceTree = "<group>"; };
 		880D2AFC20FC93A400F2E04F /* PreviewAudio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewAudio.swift; sourceTree = "<group>"; };
 		880D2AFF20FCEA5000F2E04F /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
@@ -67,6 +69,8 @@
 		88BFF7BB20E8E9FC003042E2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		88BFF7C720E8ED46003042E2 /* SearchTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
 		A881DEEB21202F8F00A59892 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		A88940ED2157E4C900D3E6AA /* AlbumTrackCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumTrackCell.swift; sourceTree = "<group>"; };
+		A88940EF2157EEEB00D3E6AA /* iTunesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iTunesList.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,7 +102,8 @@
 			isa = PBXGroup;
 			children = (
 				880B4A0E210C8FDF00A80F93 /* SearchCell.swift */,
-				880B4A10210C953F00A80F93 /* AlbumHeaderCelll.swift */,
+				880B4A10210C953F00A80F93 /* AlbumHeaderCell.swift */,
+				A88940ED2157E4C900D3E6AA /* AlbumTrackCell.swift */,
 				880B4A12210C98E400A80F93 /* TrackView.swift */,
 			);
 			path = View;
@@ -116,6 +121,7 @@
 			isa = PBXGroup;
 			children = (
 				88A41FA220EF98A900017850 /* iTunesItem.swift */,
+				A88940EF2157EEEB00D3E6AA /* iTunesList.swift */,
 				88734F2D210490B800B74881 /* iTunesModel.swift */,
 				880D2AFF20FCEA5000F2E04F /* NetworkManager.swift */,
 			);
@@ -255,15 +261,18 @@
 				TargetAttributes = {
 					88BFF79520E8E9FC003042E2 = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
 					};
 					88BFF7A920E8E9FC003042E2 = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 88BFF79520E8E9FC003042E2;
 					};
 					88BFF7B420E8E9FC003042E2 = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 88BFF79520E8E9FC003042E2;
 					};
@@ -324,15 +333,17 @@
 			files = (
 				88734F2E210490B800B74881 /* iTunesModel.swift in Sources */,
 				880B4A0F210C8FDF00A80F93 /* SearchCell.swift in Sources */,
+				A88940EE2157E4C900D3E6AA /* AlbumTrackCell.swift in Sources */,
 				886DBD0C21077123000A461B /* AlbumTableViewController.swift in Sources */,
 				88B3D5E120EE7BC60075FAAA /* TrackViewController.swift in Sources */,
-				880B4A11210C953F00A80F93 /* AlbumHeaderCelll.swift in Sources */,
+				880B4A11210C953F00A80F93 /* AlbumHeaderCell.swift in Sources */,
 				880D2B0020FCEA5000F2E04F /* NetworkManager.swift in Sources */,
 				88BFF7C820E8ED46003042E2 /* SearchTableViewController.swift in Sources */,
 				880D2AFD20FC93A400F2E04F /* PreviewAudio.swift in Sources */,
 				88A41FA320EF98A900017850 /* iTunesItem.swift in Sources */,
 				880B4A13210C98E400A80F93 /* TrackView.swift in Sources */,
 				88BFF79A20E8E9FC003042E2 /* AppDelegate.swift in Sources */,
+				A88940F02157EEEB00D3E6AA /* iTunesList.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -508,7 +519,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = js.iTunesSearchSwift;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -523,7 +534,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = js.iTunesSearchSwift;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -539,7 +550,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = js.iTunesSearchSwiftTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iTunesSearchSwift.app/iTunesSearchSwift";
 			};
@@ -556,7 +567,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = js.iTunesSearchSwiftTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iTunesSearchSwift.app/iTunesSearchSwift";
 			};
@@ -572,7 +583,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = js.iTunesSearchSwiftUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = iTunesSearchSwift;
 			};
@@ -588,7 +599,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = js.iTunesSearchSwiftUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = iTunesSearchSwift;
 			};

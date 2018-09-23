@@ -35,12 +35,13 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, iTu
     
     var clearListTableViewController:ClearListTableViewController = ClearListTableViewController()
     let model = iTunesModel.model
+    var list = iTunesModel.model.searchList
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.clearListTableViewController.loadView()
         self.searchBar.becomeFirstResponder()
-        model.searchDelegate = self;
+        list.delegate = self;
         model.beginSearch(searchString: "")
     }
     
@@ -55,21 +56,21 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, iTu
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return model.searchItemsCount()
+        return list.count
     }
 
     private let cellReuseIdentifier: String = "SearchCell"
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath) as! SearchCell
-        let item = model.searchItem(indexPath: indexPath)
+        let item = list[indexPath.row]
         cell.configureCell(item)
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         searchBar.resignFirstResponder()
-        self.model.previewItem = model.searchItem(indexPath: indexPath)
+        self.model.previewItem = list[indexPath.row]
         performSegue(withIdentifier: "iTunesSegue", sender: self)
     }
     

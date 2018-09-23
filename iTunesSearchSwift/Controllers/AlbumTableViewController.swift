@@ -9,10 +9,22 @@
 import UIKit
 
 class AlbumTableViewController: UITableViewController {
-    let model = iTunesModel.model
+    
+    let list = iTunesModel.model.albumList
+    let	model = iTunesModel.model
+
+    private let cellTrackIdentifier: String = "albumTrackCell"
+    private let cellHeaderIdentifier: String = "albumHeaderCell"
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad();
+        tableView.register(AlbumTrackCell.self, forCellReuseIdentifier: cellTrackIdentifier)
+        tableView.register(AlbumHeaderCell.self, forCellReuseIdentifier: cellHeaderIdentifier)
+    }
     
     // MARK: - Table view data source
-
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -22,31 +34,37 @@ class AlbumTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return model.albumItemsCount()
+        return list.count
     }
-
-    private let cellTrackIdentifier: String = "albumTrackCell"
-    private let cellHeaderIdentifier: String = "albumHeaderCell"
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let item = model.albumItem(indexPath: indexPath)
+        let item = list[indexPath.row]
         
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: cellHeaderIdentifier, for: indexPath) as! AlbumHeaderCell
             cell.configureCell(item: item)
+            self.title = String(describing:"Альбом: \(item.collectionName!)")
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: cellTrackIdentifier, for: indexPath) as! AlbumTrackCell
             cell.configureCell(item: item)
-            cell.checkTrack(model.previewItem.trackId == item.trackId)
+            cell.checkTrack(model.previewItem?.trackId == item.trackId)
             return cell
         }
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let item = model.albumItem(indexPath: indexPath)
-        self.model.previewItem = item
+        let item = list[indexPath.row]
+        model.previewItem = item
         self.navigationController?.popViewController(animated: true);
+    }
+    
+    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        if indexPath == IndexPath(row: 0, section: 0) {
+            return nil
+        } else {
+            return indexPath
+        }
     }
 }

@@ -8,17 +8,6 @@
 
 import UIKit
 
-class iTunesList: Codable {
-    
-    var resultCount:Int
-    var results: [iTunesItem]
-    
-    init() {
-        resultCount = 0
-        results = []
-    }
-}
-
 struct iTunesItem: Codable {
     
     var type, wrapperType, kind: String?

@@ -83,11 +83,11 @@ class PlayerButton : UIButton {
     }
     
     func pauseImage () {
-        self.setImage(UIImage.init(named:"pause"), for: UIControlState.normal)
+        self.setImage(UIImage.init(named:"pause"), for: UIControl.State.normal)
     }
     
     func playImage () {
-        self.setImage(UIImage.init(named:"play"), for: UIControlState.normal)
+        self.setImage(UIImage.init(named:"play"), for: UIControl.State.normal)
     }
     
     @objc func pulsate () {
@@ -116,7 +116,7 @@ class TrackView : UIView, PreviewAudioDelegate {
         super.layoutSubviews()
     }
     
-    func updateView(item:iTunesItem) {
+    func updateView(_ item:iTunesItem) {
         self.item = item
         self.trackInfoLabel?.text = "Загрузить фрагмент"
         self.trackNameLabel?.text = item.fullTrackNumber + "  " + item.trackName.asStringOrEmpty()

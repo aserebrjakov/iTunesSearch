@@ -9,15 +9,6 @@
 import Foundation
 import UIKit
 
-protocol iTunesSearchDelegate: AnyObject {
-    func showClearList(_ message:String)
-    func showList()
-}
-
-protocol iTunesAlbumDelegate: AnyObject {
-    func albumDidLoad()
-}
-
 enum responceEnum {
     case complete (iTunesList)
     case error (String)
@@ -26,45 +17,15 @@ enum responceEnum {
 class iTunesModel: NSObject {
     
     static let model = iTunesModel()
-    
-    private var searchList: iTunesList = iTunesList()
-    private var albumList: iTunesList = iTunesList()
-    private var albumID: Int!
-    weak var searchDelegate:iTunesSearchDelegate?
-    weak var albumDelegate:iTunesAlbumDelegate?
-    
-    var lastSearchString:String = ""
-    
+    var searchList: SearchList = SearchList()
+    var albumList: AlbumList = AlbumList()
     var previewItem: iTunesItem!
-    
-    func searchItem (indexPath:IndexPath) -> iTunesItem? {
-        guard indexPath.row < self.searchList.results.count else {
-            return nil
-        }
-        
-        let item = self.searchList.results[indexPath.row]
-        
-        return item
-    }
-    
-    func albumItem (indexPath:IndexPath) -> iTunesItem {
-        let item = self.albumList.results[indexPath.row]
-        return item
-    }
-    
-    func searchItemsCount() -> Int {
-        return self.searchList.results.count
-    }
-    
-    func albumItemsCount() -> Int {
-        return self.albumList.results.count
-    }
     
     func albumSearch(collectionID:Int) {
         
-        if let albID = self.albumID, albID == collectionID {return}
+        if let albID = albumList.albumID, albID == collectionID {return}
         
-        NetworkManager.albumSearchRequest(collectionID:collectionID) { (responseData) in
+        NetworkManager.albumSearchRequest(collectionID) { (responseData) in
         
             NetworkManager.stopNetworkActivityIndicator(true)
 
@@ -76,42 +37,49 @@ class iTunesModel: NSObject {
                 print("Ошибка парсера: \(message)")
                 break
             case .complete(let list):
-                self.albumID = collectionID
-                self.albumList = list
-                self.albumDelegate?.albumDidLoad()
+                self.albumList.albumID = collectionID
+                self.albumList.load(list)
+                self.albumList.delegate?.albumDidLoad()
             }
         }
+    }
+    
+    func albumSearchPreload() {
+        guard let collectionID = self.previewItem.collectionId else {
+            return
+        }
+        self.albumSearch(collectionID: collectionID)
     }
     
     func beginSearch(searchString:String) {
         
         if searchString.count == 0 {
-            searchDelegate?.showClearList("Введите ключевые слова в строке поиска")
+            searchList.delegate?.showClearList("Введите ключевые слова в строке поиска")
             return
         } else if searchString.count < 5 {
-            searchDelegate?.showClearList("В запросе должно быть не менее 5 символов")
+            searchList.delegate?.showClearList("В запросе должно быть не менее 5 символов")
             return
         }
         
-        self.lastSearchString = searchString        
+        self.searchList.lastSearchString = searchString
         NetworkManager.iTunesSearchRequest(searchString:searchString) { (responseData, searchString) in
             
-            if (searchString == self.lastSearchString) {
-                NetworkManager.stopNetworkActivityIndicator(searchString == self.lastSearchString)
+            if (searchString == self.searchList.lastSearchString) {
+                NetworkManager.stopNetworkActivityIndicator(searchString == self.searchList.lastSearchString)
                 
                 let responce:responceEnum = iTunesModel.data2iTunesList(responseData: responseData)
                 
                 switch responce {
                     case let .error (message):
-                        self.searchDelegate?.showClearList(message as String)
+                        self.searchList.delegate?.showClearList(message as String)
                         break
                     case .complete(let list):
                         if list.resultCount == 0 {
-                            self.searchDelegate?.showClearList("По запросу'\(searchString)' ничего не найдено")
+                            self.searchList.delegate?.showClearList("По запросу'\(searchString)' ничего не найдено")
                         } else {
                             print("По запросу '\(searchString)' получено \(list.resultCount) треков")
-                            self.searchList = list
-                            self.searchDelegate?.showList()
+                            self.searchList.load(list)
+                            self.searchList.delegate?.showList()
                         }
                 }
             }

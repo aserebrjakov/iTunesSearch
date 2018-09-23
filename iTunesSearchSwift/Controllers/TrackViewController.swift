@@ -25,42 +25,33 @@ class TrackViewController: UIViewController, iTunesAlbumDelegate {
         }
     }
 
-    func albumSearchPreload() {
-        guard let collectionID = self.model.previewItem.collectionId else {
-            return
-        }
-        
-        self.model.albumSearch(collectionID: collectionID)
-    }
-    
     @objc func didTapAlbumButton() {
-        let albumView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AlbumTableViewController") as! AlbumTableViewController
-        
+        let albumView = AlbumTableViewController()
         self.navigationController?.pushViewController(albumView, animated: true)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        model.albumDelegate = self
-        self.albumSearchPreload()
+        model.albumList.delegate = self
+        model.albumSearchPreload()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        (self.view as! TrackView).updateView(item: self.model.previewItem!)
-        self.previewAudio = PreviewAudio(url: self.model.previewItem?.previewUrl, delegate: self.view as? PreviewAudioDelegate)
+        (self.view as! TrackView).updateView(model.previewItem!)
+        self.previewAudio = PreviewAudio(url: model.previewItem?.previewUrl, delegate: self.view as? PreviewAudioDelegate)
         self.updateNavigationBar()
     }
     
     func updateNavigationBar() {
-        if let collectionName = self.model.previewItem.collectionName {
-            if model.albumItemsCount() > 0 {
+        if let collectionName = model.previewItem!.collectionName {
+            if model.albumList.count > 0 {
                 let rightSideOptionButton = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(didTapAlbumButton))
                 self.navigationItem.rightBarButtonItem = rightSideOptionButton
             }
             self.navigationItem.previewTitle(name:self.model.previewItem.trackName , album: collectionName)
         } else {
-            self.title = self.model.previewItem.trackName
+            self.title = model.previewItem!.trackName
         }
     }
     
@@ -72,5 +63,4 @@ class TrackViewController: UIViewController, iTunesAlbumDelegate {
     override func willRotate(to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {
         self.updateNavigationBar()
     }
-    
 }

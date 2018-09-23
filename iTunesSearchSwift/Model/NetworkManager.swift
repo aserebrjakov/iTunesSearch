@@ -80,8 +80,8 @@ class NetworkManager: NSObject {
     }
     
     static private let mainURL = "https://itunes.apple.com/"
-    
-    static func albumSearchRequest(collectionID: Int, block:@escaping (_ dataResponse:Data?) -> ()) {
+        
+    static func albumSearchRequest(_ collectionID: Int, block:@escaping (_ dataResponse:Data?) -> ()) {
         let collection = String(collectionID)
         let path = String(format:"\(mainURL)lookup?id=\(collection)&entity=song")
         
