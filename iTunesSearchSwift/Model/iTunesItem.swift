@@ -8,13 +8,24 @@
 
 import UIKit
 
+extension KeyedDecodingContainer {
+    func decodeForString(forKey key: KeyedDecodingContainer.Key) throws -> String {
+        do {
+            return try self.decode(String.self, forKey: key)
+        } catch DecodingError.typeMismatch {
+            let value = try self.decode(Int.self, forKey: key)
+            return String(describing: value)
+        }
+    }
+}
+
 struct iTunesItem: Codable {
     
     var type, wrapperType, kind: String?
     var genreName, country, releaseDate :String?
     var description, longDescription: String?
-    var artistName, collectionName, trackName:String?
-    var collectionId, trackId, artistId :Int?
+    var artistName, collectionName, trackName, artistId:String?
+    var collectionId, trackId :Int?
     var trackTimeMillis, trackCount, trackNumber, discCount, discNumber :Int?
     var artworkUrl100, previewUrl :String?
     
@@ -28,6 +39,38 @@ struct iTunesItem: Codable {
         case artworkUrl100, previewUrl
     }
     
+    public init(from decoder: Decoder) throws {
+        
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        self.type = try? container.decode(String.self, forKey: .type)
+        self.wrapperType = try? container.decode(String.self, forKey: .wrapperType)
+        self.kind = try? container.decode(String.self, forKey: .kind)
+            
+        self.genreName = try? container.decode(String.self, forKey: .genreName)
+        self.country = try? container.decode(String.self, forKey: .country)
+        self.releaseDate = try? container.decode(String.self, forKey: .releaseDate)
+        self.description = try? container.decode(String.self, forKey: .description)
+        self.longDescription = try? container.decode(String.self, forKey: .longDescription)
+        self.artistName = try? container.decode(String.self, forKey: .artistName)
+        self.collectionName = try? container.decode(String.self, forKey: .collectionName)
+        self.trackName = try? container.decode(String.self, forKey: .trackName)
+        self.artistId = try? container.decodeForString(forKey: .artistId)
+        
+        self.artworkUrl100 = try? container.decode(String.self, forKey: .artworkUrl100)
+        self.previewUrl = try? container.decode(String.self, forKey: .previewUrl)
+
+        self.collectionId = try? container.decode(Int.self, forKey: .collectionId)
+        self.trackId = try? container.decode(Int.self, forKey: .trackId)
+        self.trackTimeMillis = try? container.decode(Int.self, forKey: .trackTimeMillis)
+        self.trackCount = try? container.decode(Int.self, forKey: .trackCount)
+        self.trackNumber = try? container.decode(Int.self, forKey: .trackNumber)
+        self.discCount = try? container.decode(Int.self, forKey: .discCount)
+        self.discNumber = try? container.decode(Int.self, forKey: .discNumber)
+    }
+}
+
+extension iTunesItem {
     //в случае если в коллекции больше одного диска возвращает номер трека вместе с номером диска
     var fullTrackNumber:String {
         guard let tnumber = trackNumber else {

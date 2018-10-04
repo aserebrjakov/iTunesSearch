@@ -8,41 +8,19 @@
 
 import UIKit
 
-// Контроллер который показывает пустой список с сообщениями.
-class ClearListTableViewController: UITableViewController {
-    var message:String!
-    
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 150.0
-    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-    
-    private let notFoundCellIdentifier: String = "NotFoundCell"
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: notFoundCellIdentifier, for: indexPath)
-        cell.textLabel?.text = self.message
-        return cell
-    }
-}
-
 class SearchTableViewController: UITableViewController, UISearchBarDelegate, iTunesSearchDelegate {
     
     @IBOutlet var searchBar: UISearchBar!
     
-    var clearListTableViewController:ClearListTableViewController = ClearListTableViewController()
-    let model = iTunesModel.model
-    var list = iTunesModel.model.searchList
+    var messageView:MessageViewTableViewController = MessageViewTableViewController()
+    var list = DataManager.shared.searchList
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.clearListTableViewController.loadView()
+        self.messageView.loadView()
         self.searchBar.becomeFirstResponder()
         list.delegate = self;
-        model.beginSearch(searchString: "")
+        list.beginSearch(searchString: "")
     }
     
     // MARK: - UITableViewDelegate
@@ -63,14 +41,13 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, iTu
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath) as! SearchCell
-        let item = list[indexPath.row]
-        cell.configureCell(item)
+        cell.configureCell(list[indexPath.row])
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         searchBar.resignFirstResponder()
-        self.model.previewItem = list[indexPath.row]
+        DataManager.loadPreview(item: list[indexPath.row])
         performSegue(withIdentifier: "iTunesSegue", sender: self)
     }
     
@@ -78,7 +55,7 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, iTu
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
-            self.model.beginSearch(searchString: searchBar.text!)
+            self.list.beginSearch(searchString: searchBar.text!)
         }
     }
     
@@ -88,11 +65,11 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, iTu
     
     // MARK: - iTunesSearchDelegate
     
-    func showClearList(_ message:String) {
+    func showMessageList(_ message:String) {
         DispatchQueue.main.async {
-            self.tableView.dataSource = self.clearListTableViewController
-            self.tableView.delegate = self.clearListTableViewController
-            self.clearListTableViewController.message = message
+            self.tableView.dataSource = self.messageView
+            self.tableView.delegate = self.messageView
+            self.messageView.message = message
             self.tableView.reloadData()
         }
     }
@@ -105,4 +82,25 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, iTu
         }
     }
     
+}
+
+// Контроллер который показывает пустой список с сообщениями.
+class MessageViewTableViewController: UITableViewController {
+    var message:String!
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 150.0
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    private let notFoundCellIdentifier: String = "NotFoundCell"
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: notFoundCellIdentifier, for: indexPath)
+        cell.textLabel?.text = self.message
+        return cell
+    }
 }

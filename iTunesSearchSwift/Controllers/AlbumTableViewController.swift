@@ -10,9 +10,8 @@ import UIKit
 
 class AlbumTableViewController: UITableViewController {
     
-    let list = iTunesModel.model.albumList
-    let	model = iTunesModel.model
-
+    let list = DataManager.shared.albumList
+    
     private let cellTrackIdentifier: String = "albumTrackCell"
     private let cellHeaderIdentifier: String = "albumHeaderCell"
     
@@ -21,6 +20,7 @@ class AlbumTableViewController: UITableViewController {
         super.viewDidLoad();
         tableView.register(AlbumTrackCell.self, forCellReuseIdentifier: cellTrackIdentifier)
         tableView.register(AlbumHeaderCell.self, forCellReuseIdentifier: cellHeaderIdentifier)
+        self.title = list.albumName
     }
     
     // MARK: - Table view data source
@@ -39,32 +39,23 @@ class AlbumTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let item = list[indexPath.row]
-        
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: cellHeaderIdentifier, for: indexPath) as! AlbumHeaderCell
-            cell.configureCell(item: item)
-            self.title = String(describing:"Альбом: \(item.collectionName!)")
+            cell.configureCell(item: list[indexPath.row])
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: cellTrackIdentifier, for: indexPath) as! AlbumTrackCell
-            cell.configureCell(item: item)
-            cell.checkTrack(model.previewItem?.trackId == item.trackId)
+            cell.configureCell(item: list[indexPath.row], trackId: list.trackId)
             return cell
         }
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let item = list[indexPath.row]
-        model.previewItem = item
+        DataManager.loadPreview(item: list[indexPath.row])
         self.navigationController?.popViewController(animated: true);
     }
     
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        if indexPath == IndexPath(row: 0, section: 0) {
-            return nil
-        } else {
-            return indexPath
-        }
+        return (indexPath == IndexPath(row: 0, section: 0)) ? nil: indexPath
     }
 }

@@ -96,7 +96,10 @@ class NetworkManager: NSObject {
         searchRequest.resume()
     }
     
-    static func iTunesSearchRequest(searchString: String, block:@escaping (_ dataResponse:Data?,_ searchString:String) -> ()) {
+    typealias RequestResult = (_ dataResponse:Data?,_ searchString:String) -> ()
+    typealias IsLastString = (_ searchString:String) -> (Bool)
+    
+    static func iTunesSearchRequest(searchString: String, block:@escaping (RequestResult), last: @escaping(IsLastString)) {
         let params = searchString.replacingOccurrences(of:" ", with: "+")
         let escapedString = params.addingPercentEncoding(withAllowedCharacters:NSCharacterSet.urlQueryAllowed)
         let path = String(format:"\(mainURL)search?term=%@&limit=200&offset=%d", escapedString!, 0)
@@ -106,10 +109,12 @@ class NetworkManager: NSObject {
         let url = URL(string:path)
         let request = URLRequest(url:url!, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 20)
         let searchRequest = self.shared.session.dataTask(with: request, completionHandler: {(data, response, error) in
-            block(data, searchString)
+            if last(searchString) {block(data, searchString)}
         })
         searchRequest.resume()
     }
+    
+    static let noArtworkImage = UIImage(named:"noArtwork")
     
     static func runNetworkActivityIndicator() {
         DispatchQueue.main.async {

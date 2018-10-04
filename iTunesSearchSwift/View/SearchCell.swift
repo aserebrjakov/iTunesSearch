@@ -30,8 +30,6 @@ class SearchCell: UITableViewCell {
         return 65
     }
     
-    private let noArtworkImage = UIImage(named:"noArtwork")
-    
     func configureCell(_ item: iTunesItem!) {
         
         guard let item = item else { return }
@@ -40,7 +38,7 @@ class SearchCell: UITableViewCell {
         self.songAuthorLabel?.text = item.artistName
         self.songTimeLabel?.text = item.trackLenght()
 
-        self.artworkImageView?.image = self.noArtworkImage;
+        self.artworkImageView?.image = NetworkManager.noArtworkImage;
         NetworkManager.downloadImage(path: item.artworkUrl100!) { (image) in
             self.artworkImageView.image = image
             self.layoutIfNeeded()
@@ -58,7 +56,6 @@ class SearchCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        // Configure the view for the selected state
     }
 
 }
