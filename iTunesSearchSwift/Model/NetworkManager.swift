@@ -17,21 +17,21 @@ class ImageCache {
         return cache
     }()
     
-    static func costFor(image: UIImage) -> Int {
+    class func costFor(image: UIImage) -> Int {
         guard let imageRef = image.cgImage else {
             return 0
         }
         return imageRef.bytesPerRow * imageRef.height // Cost in bytes
     }
     
-    static func imageForKey(_ path: NSString) -> UIImage! {
+    class func imageForKey(_ path: NSString) -> UIImage! {
         if let imageFromCache = ImageCache.shared.object(forKey: path as NSString) {
             return imageFromCache
         }
         return nil
     }
     
-    static func addImageForKey(_ path: NSString, image: UIImage) {
+    class func addImageForKey(_ path: NSString, image: UIImage) {
         ImageCache.shared.setObject(image, forKey: path as NSString, cost:self.costFor(image: image))
     }
 }
@@ -48,7 +48,7 @@ class NetworkManager: NSObject {
     
     static private let mainURL = "https://itunes.apple.com/"
         
-    static func albumSearchRequest(_ collectionID: Int, block:@escaping (_ dataResponse:Data?) -> ()) {
+    class func albumSearchRequest(_ collectionID: Int, block:@escaping (_ dataResponse:Data?) -> ()) {
         let collection = String(collectionID)
         let path = String(format:"\(mainURL)lookup?id=\(collection)&entity=song")
         
@@ -81,8 +81,6 @@ class NetworkManager: NSObject {
         searchRequest.resume()
     }
     
-    static let noArtworkImage = UIImage(named:"noArtwork")
-    
     static func runNetworkActivityIndicator() {
         DispatchQueue.main.async {
             UIApplication.shared.isNetworkActivityIndicatorVisible = true
@@ -96,6 +94,8 @@ class NetworkManager: NSObject {
             }
         }
     }
+    
+    static let noArtworkImage = UIImage(named:"noArtwork")
     
     static func downloadImage(path:String, block:@escaping (_ image:UIImage?) -> ()) {
         

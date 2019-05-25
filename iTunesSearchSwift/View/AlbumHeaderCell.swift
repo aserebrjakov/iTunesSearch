@@ -92,7 +92,7 @@ class AlbumHeaderCell: UITableViewCell {
         }
     }
     
-    static func height() -> CGFloat {
+    class func height() -> CGFloat {
         return 137
     }
 }

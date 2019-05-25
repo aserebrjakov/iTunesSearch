@@ -24,38 +24,34 @@ class AlbumTrackCell : UITableViewCell {
         self.checkTrack(item.trackId == trackId)
     }
     
+    func fontSize() -> CGFloat {
+        if let size = self.textLabel?.font.pointSize {
+            return size
+        } else {
+            return 17.0
+        }
+    }
+    
+    func labelFont(_ equal:Bool) -> UIFont {
+        let size = fontSize()
+        let font = equal ? UIFont.systemFont(ofSize: size , weight: .bold) : UIFont.systemFont(ofSize: size)
+        return font
+    }
+    
     func checkTrack(_ equal:Bool) {
-        let size = self.textLabel?.font.pointSize
-        let font = equal ? UIFont.systemFont(ofSize: size! , weight: .bold) : UIFont.systemFont(ofSize: size!)
+        let font = labelFont(equal)
         self.textLabel?.font = font
         self.detailTextLabel?.font = font
     }
     
-//    func configureCell(item: iTunesItem!) {
-//        self.textLabel?.text = String("\(item.fullTrackNumber)  \(item.trackName!)")
-//        self.detailTextLabel?.text = item.trackLenght()
-//    }
-//
-//    func checkTrack(_ equal:Bool) {
-//        if equal {
-//            let font = UIFont.systemFont(ofSize: (self.textLabel?.font.pointSize)! , weight: .bold)
-//            self.textLabel?.font = font
-//            self.detailTextLabel?.font = font
-//        } else {
-//            let font = UIFont.systemFont(ofSize: (self.textLabel?.font.pointSize)!)
-//            self.textLabel?.font = font
-//            self.detailTextLabel?.font = font
-//        }
-//    }
-//
     override func prepareForReuse() {
-        let font = UIFont.systemFont(ofSize: (self.textLabel?.font.pointSize)!)
+        let font = labelFont(false)
         self.textLabel?.font = font
         self.detailTextLabel?.font = font
         super.prepareForReuse()
     }
     
-    static func height() -> CGFloat {
+    class func height() -> CGFloat {
         return 44
     }
 

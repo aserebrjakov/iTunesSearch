@@ -15,7 +15,6 @@ class AlbumTableViewController: UITableViewController {
     private let cellTrackIdentifier: String = "albumTrackCell"
     private let cellHeaderIdentifier: String = "albumHeaderCell"
     
-    
     override func viewDidLoad() {
         super.viewDidLoad();
         tableView.register(AlbumTrackCell.self, forCellReuseIdentifier: cellTrackIdentifier)
