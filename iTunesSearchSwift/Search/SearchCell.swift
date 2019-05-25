@@ -26,7 +26,7 @@ class SearchCell: UITableViewCell {
         self.setupRoundCorner()
     }
     
-    static func height() -> CGFloat {
+    class func height() -> CGFloat {
         return 65
     }
     

@@ -22,7 +22,9 @@
 		88BFF7A420E8E9FC003042E2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88BFF7A220E8E9FC003042E2 /* LaunchScreen.storyboard */; };
 		88BFF7AF20E8E9FC003042E2 /* iTunesSearchSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BFF7AE20E8E9FC003042E2 /* iTunesSearchSwiftTests.swift */; };
 		88BFF7BA20E8E9FC003042E2 /* iTunesSearchSwiftUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BFF7B920E8E9FC003042E2 /* iTunesSearchSwiftUITests.swift */; };
-		88BFF7C820E8ED46003042E2 /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BFF7C720E8ED46003042E2 /* SearchTableViewController.swift */; };
+		88BFF7C820E8ED46003042E2 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BFF7C720E8ED46003042E2 /* SearchViewController.swift */; };
+		A85563D02299831600B729B4 /* StrogateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85563CF2299831600B729B4 /* StrogateManager.swift */; };
+		A85563D222999A9300B729B4 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85563D122999A9300B729B4 /* SearchViewModel.swift */; };
 		A881DEEC21202F9000A59892 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = A881DEEB21202F8F00A59892 /* README.md */; };
 		A88940EE2157E4C900D3E6AA /* AlbumTrackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A88940ED2157E4C900D3E6AA /* AlbumTrackCell.swift */; };
 		A88940F02157EEEB00D3E6AA /* iTunesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A88940EF2157EEEB00D3E6AA /* iTunesList.swift */; };
@@ -67,7 +69,9 @@
 		88BFF7B520E8E9FC003042E2 /* iTunesSearchSwiftUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iTunesSearchSwiftUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		88BFF7B920E8E9FC003042E2 /* iTunesSearchSwiftUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iTunesSearchSwiftUITests.swift; sourceTree = "<group>"; };
 		88BFF7BB20E8E9FC003042E2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		88BFF7C720E8ED46003042E2 /* SearchTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
+		88BFF7C720E8ED46003042E2 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		A85563CF2299831600B729B4 /* StrogateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrogateManager.swift; sourceTree = "<group>"; };
+		A85563D122999A9300B729B4 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		A881DEEB21202F8F00A59892 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		A88940ED2157E4C900D3E6AA /* AlbumTrackCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumTrackCell.swift; sourceTree = "<group>"; };
 		A88940EF2157EEEB00D3E6AA /* iTunesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iTunesList.swift; sourceTree = "<group>"; };
@@ -101,7 +105,6 @@
 		880B4A0B210C8DE500A80F93 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				880B4A0E210C8FDF00A80F93 /* SearchCell.swift */,
 				880B4A10210C953F00A80F93 /* AlbumHeaderCell.swift */,
 				A88940ED2157E4C900D3E6AA /* AlbumTrackCell.swift */,
 				880B4A12210C98E400A80F93 /* TrackView.swift */,
@@ -124,6 +127,7 @@
 				A88940EF2157EEEB00D3E6AA /* iTunesList.swift */,
 				88734F2D210490B800B74881 /* DataManager.swift */,
 				880D2AFF20FCEA5000F2E04F /* NetworkManager.swift */,
+				A85563CF2299831600B729B4 /* StrogateManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -131,7 +135,6 @@
 		88A41FA420EFBAA800017850 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				88BFF7C720E8ED46003042E2 /* SearchTableViewController.swift */,
 				88B3D5E020EE7BC60075FAAA /* TrackViewController.swift */,
 				886DBD0B21077123000A461B /* AlbumTableViewController.swift */,
 			);
@@ -165,6 +168,7 @@
 				88BFF79920E8E9FC003042E2 /* AppDelegate.swift */,
 				880D2AFE20FCC27B00F2E04F /* Model */,
 				880B4A0B210C8DE500A80F93 /* View */,
+				A85563D32299A04300B729B4 /* Search */,
 				88A41FA420EFBAA800017850 /* Controllers */,
 				880B4A14210CB30D00A80F93 /* Audio */,
 				88BFF79D20E8E9FC003042E2 /* Main.storyboard */,
@@ -191,6 +195,16 @@
 				88BFF7BB20E8E9FC003042E2 /* Info.plist */,
 			);
 			path = iTunesSearchSwiftUITests;
+			sourceTree = "<group>";
+		};
+		A85563D32299A04300B729B4 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				880B4A0E210C8FDF00A80F93 /* SearchCell.swift */,
+				A85563D122999A9300B729B4 /* SearchViewModel.swift */,
+				88BFF7C720E8ED46003042E2 /* SearchViewController.swift */,
+			);
+			path = Search;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -334,11 +348,13 @@
 				88734F2E210490B800B74881 /* DataManager.swift in Sources */,
 				880B4A0F210C8FDF00A80F93 /* SearchCell.swift in Sources */,
 				A88940EE2157E4C900D3E6AA /* AlbumTrackCell.swift in Sources */,
+				A85563D02299831600B729B4 /* StrogateManager.swift in Sources */,
 				886DBD0C21077123000A461B /* AlbumTableViewController.swift in Sources */,
 				88B3D5E120EE7BC60075FAAA /* TrackViewController.swift in Sources */,
+				A85563D222999A9300B729B4 /* SearchViewModel.swift in Sources */,
 				880B4A11210C953F00A80F93 /* AlbumHeaderCell.swift in Sources */,
 				880D2B0020FCEA5000F2E04F /* NetworkManager.swift in Sources */,
-				88BFF7C820E8ED46003042E2 /* SearchTableViewController.swift in Sources */,
+				88BFF7C820E8ED46003042E2 /* SearchViewController.swift in Sources */,
 				880D2AFD20FC93A400F2E04F /* PreviewAudio.swift in Sources */,
 				88A41FA320EF98A900017850 /* iTunesItem.swift in Sources */,
 				880B4A13210C98E400A80F93 /* TrackView.swift in Sources */,

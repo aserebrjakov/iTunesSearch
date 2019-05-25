@@ -46,39 +46,6 @@ class NetworkManager: NSObject {
         session = URLSession(configuration: config)
     }
     
-    private static func removePreviewFile (previewFileURL: URL!) {
-        guard (previewFileURL) != nil , FileManager.default.fileExists(atPath: previewFileURL.path) else {
-            return
-        }
-        
-        do {
-            try FileManager.default.removeItem(at:previewFileURL)
-            print("Удалён:", previewFileURL.lastPathComponent)
-        } catch let error as NSError {
-            print("Ошибка удаления файла:", error.localizedDescription)
-        }
-    }
-    
-    private static func fileSize(url:URL) -> String {
-        do {
-            let attr = try FileManager.default.attributesOfItem(atPath: url.path)
-            return String(format:"%@ размер: %d байт", url.lastPathComponent, attr[FileAttributeKey.size] as! UInt64)
-        } catch {
-            return "Файл не найден"
-        }
-    }
-    
-    static func copyPreviewFile (at: URL, to: URL) {
-        do {
-            self.removePreviewFile(previewFileURL: to)
-            try FileManager.default.copyItem(at: at, to: to)
-            print("Сохранён:", fileSize(url: to))
-        } catch let fileError as NSError {
-            print("Ошибка записи файла:", fileError.localizedDescription)
-            return
-        }
-    }
-    
     static private let mainURL = "https://itunes.apple.com/"
         
     static func albumSearchRequest(_ collectionID: Int, block:@escaping (_ dataResponse:Data?) -> ()) {
@@ -187,11 +154,10 @@ class NetworkManager: NSObject {
                 print("Файл успешно скачан: \(statusCode)")
             }
             
-            let docDirectory = try! FileManager.default.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-            let previewURL = docDirectory.appendingPathComponent((response?.suggestedFilename)!)
-            self.copyPreviewFile(at: localUrl, to:previewURL)
-            block(previewURL)
-            
+            if let previewURL = StrogateManager.previewURL(response: response) {
+                StrogateManager.copyPreviewFile(at: localUrl, to: previewURL)
+                block(previewURL)
+            }
         }
         
         task.resume()
