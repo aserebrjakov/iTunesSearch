@@ -16,29 +16,41 @@ protocol PreviewAudioDelegate: AnyObject {
     func playerUpdateData(string:String, float:Float)
 }
 
-class PreviewAudio: NSObject, AVAudioPlayerDelegate  {
+enum TrackPlayerState: String {
+    case none
+    case trackDownload
+    case trackPlay
+    case trackStop
+    case error
+}
+
+class TrackPreviewAudio: NSObject, AVAudioPlayerDelegate  {
     private var audioPlayer:AVAudioPlayer!
     private var previewFileURL:URL!
     private var playerTimer:Timer!
     private var previewUrl:String?
+    private var state:TrackPlayerState
     weak var delegate:PreviewAudioDelegate?
     
     init(url:String!, delegate:PreviewAudioDelegate?) {
         self.previewUrl = url
         self.delegate = delegate
+        self.state = .none
     }
     
     func startAudioPlayer(previewFileURL: URL!) {
         do {
             self.previewFileURL = previewFileURL
-            try self.audioPlayer = AVAudioPlayer.init(contentsOf: self.previewFileURL)
-            self.audioPlayer.delegate = self
+            try audioPlayer = AVAudioPlayer.init(contentsOf: previewFileURL)
+            audioPlayer.delegate = self
+            state = .trackDownload
         } catch let error as NSError {
             print("Ошибка инициализации плеера:", error.localizedDescription)
+            state = .error
             return
         }
         
-        self.audioPlayer.prepareToPlay()
+        audioPlayer.prepareToPlay()
         
         DispatchQueue.main.async {
             self.stopPlay()
@@ -46,51 +58,66 @@ class PreviewAudio: NSObject, AVAudioPlayerDelegate  {
     }
     
     func didTapButton() {
-        if (self.audioPlayer == nil) {
-            self.beginDownload()
-        } else if (self.audioPlayer.isPlaying) {
-            self.stopPlay()
-        } else {
-            self.beginPlay()
+        
+        switch state {
+            case .none:
+                beginDownload()
+            case .trackDownload, .trackStop:
+                beginPlay()
+            case .trackPlay:
+                stopPlay()
+            default: break
         }
     }
     
     func beginDownload() {
         self.delegate?.playerBeginDownloadSong()
-        NetworkManager.downloadPrewiewSong(previewURL: self.previewUrl!) { (url) in
+        
+        let downloader = TrackDownloader()
+        downloader.download(previewURL: self.previewUrl!, completion: { (url) in
             self.startAudioPlayer(previewFileURL:url)
+        }) { (written, expected) in
+            DispatchQueue.main.async {
+                let flt = Float(written)/Float(expected)
+                let str = "Всего: " + String(written) + " / " + String(expected)
+                self.delegate?.playerUpdateData(string: str , float: flt)
+            }
+            
         }
     }
     
     func stopPlay() {
-        self.audioPlayer.stop()
-        self.delegate?.playerStopPlay()
-        self.playerTimer?.invalidate()
-        self.updateTime()
+        state = .trackStop
+        audioPlayer.stop()
+        delegate?.playerStopPlay()
+        playerTimer?.invalidate()
+        updateTime()
     }
     
     func beginPlay() {
-        self.audioPlayer.play()
-        self.delegate?.playerBeginPlay()
-        self.playerTimer = Timer.scheduledTimer(timeInterval: 0.05, target: self,  selector: #selector(updateTime), userInfo: nil, repeats: true)
+        state = .trackPlay
+        audioPlayer.play()
+        delegate?.playerBeginPlay()
+        playerTimer = Timer.scheduledTimer(timeInterval: 0.05, target: self,  selector: #selector(updateTime), userInfo: nil, repeats: true)
     }
     
     @objc func updateTime() {
         let str = String(format:"%.1f / %.1f", self.audioPlayer.currentTime, self.audioPlayer.duration)
         let flt = Float(self.audioPlayer.currentTime/self.audioPlayer.duration)
-        self.delegate?.playerUpdateData(string: str, float: flt)
+        delegate?.playerUpdateData(string: str, float: flt)
     }
     
     func audioDisappear () {
-        self.audioPlayer?.stop()
-        self.playerTimer?.invalidate()
+        state = .none
+        audioPlayer?.stop()
+        playerTimer?.invalidate()
       //  DataManager.removePreviewFile(previewFileURL: self.previewFileURL)
     }
     
     // MARK: - AVAudioPlayerDelegate
     
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        self.stopPlay()
+        stopPlay()
     }
     
     func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {

@@ -38,8 +38,8 @@ class SearchCell: UITableViewCell {
         self.songAuthorLabel?.text = item.artistName
         self.songTimeLabel?.text = item.trackLenght()
 
-        self.artworkImageView?.image = NetworkManager.noArtworkImage;
-        NetworkManager.downloadImage(path: item.artworkUrl100!) { (image) in
+        self.artworkImageView?.image = ImageManager.noArtworkImage;
+        ImageManager.download(path: item.artworkUrl100!) { (image) in
             self.artworkImageView.image = image
             self.layoutIfNeeded()
         }

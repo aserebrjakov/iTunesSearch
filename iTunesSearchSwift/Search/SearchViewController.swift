@@ -11,13 +11,14 @@ import UIKit
 class SearchViewController: UITableViewController, UISearchBarDelegate {
     
     @IBOutlet var searchBar: UISearchBar!
+    @IBOutlet var counter: UILabel!
     
     var viewModel = SearchViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.start(presenter: self)
-        self.searchBar.becomeFirstResponder()
+        searchBar.becomeFirstResponder()
     }
     
     // MARK: - UITableViewDelegate
@@ -36,6 +37,10 @@ class SearchViewController: UITableViewController, UISearchBarDelegate {
 
     private let cellReuseIdentifier: String = "SearchCell"
     
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        viewModel.checkLast(indexPath.row)
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath) as! SearchCell
         let item = viewModel.item(indexPath.row)
@@ -46,8 +51,19 @@ class SearchViewController: UITableViewController, UISearchBarDelegate {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         searchBar.resignFirstResponder()
         let item = viewModel.item(indexPath.row)
-        DataManager.loadPreview(item: item)
-        performSegue(withIdentifier: "iTunesSegue", sender: self)
+        performSegue(withIdentifier: "iTunesSegue", sender: item)
+    }
+    
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "iTunesSegue" {
+            if let destination = segue.destination as? TrackViewController {
+                if let item = sender as? iTunesItem {
+                    let vm = TrackViewModel(item: item)
+                    destination.viewModel = vm
+                }
+            }
+        }
     }
     
     // MARK: - SearchBarDelegate

@@ -14,7 +14,7 @@ class iTunesSearchSwiftTests: XCTestCase {
 
     var searchTableViewController: SearchViewController!
     var trackViewController: TrackViewController!
-    var albumTableViewController :AlbumTableViewController!
+    var albumTableViewController :AlbumViewController!
     
     override func setUp() {
         super.setUp()
@@ -23,7 +23,7 @@ class iTunesSearchSwiftTests: XCTestCase {
         
         searchTableViewController =  storyboard.instantiateViewController(withIdentifier: "SearchTableViewController") as? SearchViewController
         trackViewController =  storyboard.instantiateViewController(withIdentifier: "TrackViewController") as? TrackViewController
-        albumTableViewController =  storyboard.instantiateViewController(withIdentifier: "AlbumTableViewController") as? AlbumTableViewController
+        albumTableViewController =  storyboard.instantiateViewController(withIdentifier: "AlbumViewController") as? AlbumViewController
         
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }

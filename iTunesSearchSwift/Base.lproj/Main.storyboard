@@ -176,10 +176,10 @@
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jYz-nM-Jse" customClass="RoundUIView" customModule="iTunesSearchSwift" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jYz-nM-Jse">
                                 <rect key="frame" x="10" y="792" width="394" height="60"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SUq-Pf-3ch" customClass="PlayerButton" customModule="iTunesSearchSwift" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SUq-Pf-3ch" customClass="TrackPlayerButton" customModule="iTunesSearchSwift" customModuleProvider="target">
                                         <rect key="frame" x="10" y="6" width="48" height="48"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="48" id="fGk-Rc-vcr"/>
@@ -332,16 +332,16 @@
                                 <exclude reference="u3h-Vl-pqb"/>
                             </mask>
                         </variation>
-                        <connections>
-                            <outlet property="artworkImageView" destination="wp4-LU-aL4" id="iJb-gQ-r44"/>
-                            <outlet property="authorNameLabel" destination="7Ym-hN-RyA" id="ShM-f6-ydS"/>
-                            <outlet property="collectionNameLabel" destination="vhb-c0-3fy" id="Hjf-Tj-o91"/>
-                            <outlet property="playerButton" destination="SUq-Pf-3ch" id="kZ3-9T-9qb"/>
-                            <outlet property="progressView" destination="tjG-gK-Fyv" id="fld-ll-ZTP"/>
-                            <outlet property="trackInfoLabel" destination="6BW-fO-Hyy" id="gSR-cR-Ln7"/>
-                            <outlet property="trackNameLabel" destination="Hau-ax-iAE" id="87g-gA-Osc"/>
-                        </connections>
                     </view>
+                    <connections>
+                        <outlet property="artworkImageView" destination="wp4-LU-aL4" id="Rn2-gU-ouY"/>
+                        <outlet property="authorNameLabel" destination="7Ym-hN-RyA" id="hkU-5a-AOd"/>
+                        <outlet property="collectionNameLabel" destination="vhb-c0-3fy" id="jjg-Gh-fub"/>
+                        <outlet property="playerButton" destination="SUq-Pf-3ch" id="4CH-qC-qFL"/>
+                        <outlet property="progressView" destination="tjG-gK-Fyv" id="6Ch-9e-d1T"/>
+                        <outlet property="trackInfoLabel" destination="6BW-fO-Hyy" id="5Mv-aE-p3E"/>
+                        <outlet property="trackNameLabel" destination="Hau-ax-iAE" id="CjM-BR-n26"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aDl-em-yGg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

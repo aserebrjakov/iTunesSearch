@@ -8,30 +8,30 @@
 
 import UIKit
 
-extension UILabel {
-    
-    func addAttributedString (name:String, string:String!, separate:String = " ", fontSize:CGFloat = 15, nameColor:UIColor = .black, stringColor:UIColor = .darkGray)  {
-        
-        guard let addString = string else { return }
-        
-        let nameAttributes = [
-            NSAttributedString.Key.foregroundColor: nameColor,
-            NSAttributedString.Key.font: UIFont.systemFont(ofSize: fontSize, weight: UIFont.Weight.semibold)
-        ]
-    
-        let attrString = NSMutableAttributedString (string:name, attributes:nameAttributes)
-        
-        attrString.append(NSAttributedString(string:separate, attributes:nameAttributes))
-        
-        let addAttributes = [
-            NSAttributedString.Key.foregroundColor: stringColor /*UIColor.darkGray*/,
-            NSAttributedString.Key.font: UIFont.systemFont(ofSize: fontSize)
-        ]
-        
-        attrString.append(NSAttributedString(string:addString, attributes:addAttributes))
-        self.attributedText = attrString
-    }
-}
+//extension UILabel {
+//
+//    func addAttributedString (name:String, string:String!, separate:String = " ", fontSize:CGFloat = 15, nameColor:UIColor = .black, stringColor:UIColor = .darkGray)  {
+//
+//        guard let addString = string else { return }
+//
+//        let nameAttributes = [
+//            NSAttributedString.Key.foregroundColor: nameColor,
+//            NSAttributedString.Key.font: UIFont.systemFont(ofSize: fontSize, weight: UIFont.Weight.semibold)
+//        ]
+//
+//        let attrString = NSMutableAttributedString (string:name, attributes:nameAttributes)
+//
+//        attrString.append(NSAttributedString(string:separate, attributes:nameAttributes))
+//
+//        let addAttributes = [
+//            NSAttributedString.Key.foregroundColor: stringColor /*UIColor.darkGray*/,
+//            NSAttributedString.Key.font: UIFont.systemFont(ofSize: fontSize)
+//        ]
+//
+//        attrString.append(NSAttributedString(string:addString, attributes:addAttributes))
+//        self.attributedText = attrString
+//    }
+//}
 
 class AlbumHeaderCell: UITableViewCell {
     
@@ -79,14 +79,20 @@ class AlbumHeaderCell: UITableViewCell {
     }
     
     func configureCell(item: iTunesItem!) {
-        self.collectionNameLabel.addAttributedString(name:"Альбом:", string:item.collectionName!)
-        self.artistNameLabel.addAttributedString(name:"Артист:", string:item.artistName!)
-        self.genreLabel.addAttributedString(name:"Жанр:", string:item.genreName!)
-        self.countryLabel.addAttributedString(name:"Страна:", string:item.country!)
-        self.releaseDateLabel.addAttributedString(name:"Год:", string:item.year)
+        let collection = Utils.twoWord(name:"Альбом:", string:item.collectionName!)
+        let artistName = Utils.twoWord(name:"Артист:", string:item.artistName!)
+        let genre = Utils.twoWord(name:"Жанр:", string:item.genreName!)
+        let country = Utils.twoWord(name:"Страна:", string:item.country!)
+        let releaseDate = Utils.twoWord(name:"Год:", string:item.year)
+        
+        collectionNameLabel.attributedText = collection
+        artistNameLabel.attributedText = artistName
+        genreLabel.attributedText = genre
+        countryLabel.attributedText = country
+        releaseDateLabel.attributedText = releaseDate
         
         self.artworkImageView.image = UIImage(named:"noArtwork")
-        NetworkManager.downloadImage(path: item.artworkUrl600) { (image) in
+        ImageManager.download(path: item.artworkUrl600) { (image) in
             self.artworkImageView.image = image
             self.layoutIfNeeded()
         }

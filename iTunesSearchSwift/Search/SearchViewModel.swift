@@ -10,33 +10,52 @@ import Foundation
 import UIKit
 
 class SearchViewModel: iTunesSearchDelegate {
-    var list = DataManager.shared.searchList
-    var presenter : SearchViewController?
-    var message : MessageView = MessageView()
     
+    var list: SearchList = SearchList<iTunesItem>()
+    var presenter : SearchViewController?
+    var messageView : MessageView = MessageView()
     
     func start (presenter : SearchViewController) {
         list.delegate = self
-        list.beginSearch(searchString: "")
         self.presenter = presenter
+        search("")
     }
     
     func search (_ text : String) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
-            self.list.beginSearch(searchString: text)
+            
+            if text.count == 0 {
+                self.showMessageList("Введите ключевые слова в строке поиска")
+                return
+            } else if text.count < 5 {
+                self.showMessageList("В запросе должно быть не менее 5 символов")
+                return
+            }
+            
+            self.list.beginSearch(search: text)
         }
     }
     
     // MARK: - iTunesSearchDelegate
     
     func showMessageList(_ message:String) {
-        self.message.message = message
-        self.presenter?.reload(delegate: self.message)
+        self.messageView.message = message
+        self.presenter?.reload(delegate: self.messageView)
+        Utils.stopNetworkActivity(true)
     }
     
     func showList () {
         self.presenter?.reload(delegate: self.presenter!)
+        Utils.stopNetworkActivity(true)
     }
+    
+    func updateError(_ message: String) {
+        print(message)
+        list.isUpdate = false
+        Utils.stopNetworkActivity(true)
+    }
+    
+    // MARK: -
     
     func height() -> CGFloat {
         return SearchCell.height()
@@ -54,7 +73,15 @@ class SearchViewModel: iTunesSearchDelegate {
         return list[index]
     }
     
+    func checkLast (_ index : Int) {
+        if index == count() - 1 {
+            self.list.updateSearch()
+        }
+    }
+    
 }
+
+// MARK: -
 
 // Показывает пустой список с сообщениями.
 class MessageView:NSObject, UITableViewDelegate, UITableViewDataSource {

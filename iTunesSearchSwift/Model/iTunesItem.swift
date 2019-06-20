@@ -125,3 +125,14 @@ extension iTunesItem {
         return ""
     }
 }
+
+class iTunesList<T : Codable>: Codable {
+    
+    var resultCount:Int
+    var results: [T]
+    
+    init() {
+        resultCount = 0
+        results = []
+    }
+}
