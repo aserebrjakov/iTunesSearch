@@ -16,16 +16,19 @@ class TrackDownloader: NSObject, URLSessionDownloadDelegate {
     
     typealias Completion = (_ url: URL) -> ()
     typealias Progress = (_ totalBytesWritten: Int64, _ totalBytesExpectedToWrite: Int64) -> ()
+    typealias DownloadError = (_ error: Error?) -> ()
     
     var completionHandler: Completion = {url in }
     var progressUpdate: Progress = {written, expected in }
+    var downloadError: DownloadError = {error in }
     
-    func download (previewURL:String, completion:@escaping Completion, progress:@escaping Progress) {
+    func download (previewURL:String, completion:@escaping Completion, progress:@escaping Progress, error:@escaping DownloadError) {
         let url = URL(string:previewURL)
         let request = URLRequest(url:url!)
         
         completionHandler = completion
         progressUpdate = progress
+        downloadError = error
         
         let downloadTask = self.session.downloadTask(with: request)
         downloadTask.resume()
@@ -39,6 +42,7 @@ class TrackDownloader: NSObject, URLSessionDownloadDelegate {
     internal func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
         if (error != nil) {
             print("Ошибка закачки файла:" + (error?.localizedDescription)!)
+            downloadError(error)
         } else {
             print("Выполнено")
         }

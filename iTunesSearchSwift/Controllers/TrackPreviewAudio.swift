@@ -72,17 +72,20 @@ class TrackPreviewAudio: NSObject, AVAudioPlayerDelegate  {
     
     func beginDownload() {
         self.delegate?.playerBeginDownloadSong()
-        
         let downloader = TrackDownloader()
         downloader.download(previewURL: self.previewUrl!, completion: { (url) in
             self.startAudioPlayer(previewFileURL:url)
-        }) { (written, expected) in
+        }, progress: { (written, expected) in
             DispatchQueue.main.async {
                 let flt = Float(written)/Float(expected)
                 let str = "Всего: " + String(written) + " / " + String(expected)
                 self.delegate?.playerUpdateData(string: str , float: flt)
             }
-            
+        }) { (error) in
+            DispatchQueue.main.async {
+                let err = String(describing: error?.localizedDescription)
+                self.delegate?.playerUpdateData(string: "Error: \(err))" , float: 0)
+            }
         }
     }
     
