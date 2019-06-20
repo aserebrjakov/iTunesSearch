@@ -74,6 +74,10 @@ class SearchList<T> {
     
     public typealias iTunesData = iTunesList<iTunesItem>
     
+    func clean() {
+        items = []
+    }
+    
     func beginSearch(search:String) {
         
         lastSearch = search

@@ -11,13 +11,15 @@ import UIKit
 
 class SearchViewModel: iTunesSearchDelegate {
     
-    var list: SearchList = SearchList<iTunesItem>()
+    var list : SearchList = SearchList<iTunesItem>()
     var presenter : SearchViewController?
-    var messageView : MessageView = MessageView()
+    var messageView : MessageViewMediator = MessageViewMediator()
+    var mediator : SearchViewMediator!
     
     func start (presenter : SearchViewController) {
         list.delegate = self
         self.presenter = presenter
+        self.mediator = SearchViewMediator(viewModel: self)
         search("")
     }
     
@@ -39,13 +41,14 @@ class SearchViewModel: iTunesSearchDelegate {
     // MARK: - iTunesSearchDelegate
     
     func showMessageList(_ message:String) {
+        self.list.clean()
         self.messageView.message = message
         self.presenter?.reload(delegate: self.messageView)
         Utils.stopNetworkActivity(true)
     }
     
     func showList () {
-        self.presenter?.reload(delegate: self.presenter!)
+        self.presenter?.reload(delegate: self.mediator)
         Utils.stopNetworkActivity(true)
     }
     
@@ -73,33 +76,22 @@ class SearchViewModel: iTunesSearchDelegate {
         return list[index]
     }
     
+    func model(_ index : Int) -> SearchCellViewModel {
+        return SearchCellViewModel(list[index])
+    }
+    
     func checkLast (_ index : Int) {
         if index == count() - 1 {
             self.list.updateSearch()
         }
     }
     
+    func selectItem (index: Int) {
+        let item = self.item(index)
+        presenter?.segue(item: item)
+    }
 }
 
 // MARK: -
 
-// Показывает пустой список с сообщениями.
-class MessageView:NSObject, UITableViewDelegate, UITableViewDataSource {
-    var message:String!
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 150.0
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-    
-    private let notFoundCellIdentifier: String = "NotFoundCell"
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: notFoundCellIdentifier, for: indexPath)
-        cell.textLabel?.text = self.message
-        return cell
-    }
-}
+

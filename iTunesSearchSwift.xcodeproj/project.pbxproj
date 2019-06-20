@@ -20,7 +20,6 @@
 		88BFF7A420E8E9FC003042E2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88BFF7A220E8E9FC003042E2 /* LaunchScreen.storyboard */; };
 		88BFF7AF20E8E9FC003042E2 /* iTunesSearchSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BFF7AE20E8E9FC003042E2 /* iTunesSearchSwiftTests.swift */; };
 		88BFF7BA20E8E9FC003042E2 /* iTunesSearchSwiftUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BFF7B920E8E9FC003042E2 /* iTunesSearchSwiftUITests.swift */; };
-		88BFF7C820E8ED46003042E2 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BFF7C720E8ED46003042E2 /* SearchViewController.swift */; };
 		A847FE6B229AAB6B00581EEE /* TrackPlayerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A847FE6A229AAB6B00581EEE /* TrackPlayerButton.swift */; };
 		A847FE6E229AC20600581EEE /* TrackDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A847FE6D229AC20600581EEE /* TrackDownloader.swift */; };
 		A85563D02299831600B729B4 /* StrogateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85563CF2299831600B729B4 /* StrogateManager.swift */; };
@@ -29,6 +28,8 @@
 		A881DEEC21202F9000A59892 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = A881DEEB21202F8F00A59892 /* README.md */; };
 		A88940EE2157E4C900D3E6AA /* AlbumTrackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A88940ED2157E4C900D3E6AA /* AlbumTrackCell.swift */; };
 		A89695B322AE7CAE00579012 /* AlbumList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A89695B222AE7CAE00579012 /* AlbumList.swift */; };
+		A8C662C122BB89DD00AF5EB3 /* SearchViewMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C662C022BB89DD00AF5EB3 /* SearchViewMediator.swift */; };
+		A8C662C322BB94EE00AF5EB3 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C662C222BB94EE00AF5EB3 /* SearchViewController.swift */; };
 		A8DFDA9622A949BE002EE7DD /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DFDA9522A949BE002EE7DD /* ImageManager.swift */; };
 		A8DFDA9A22A95384002EE7DD /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DFDA9922A95384002EE7DD /* Utils.swift */; };
 /* End PBXBuildFile section */
@@ -70,7 +71,6 @@
 		88BFF7B520E8E9FC003042E2 /* iTunesSearchSwiftUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iTunesSearchSwiftUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		88BFF7B920E8E9FC003042E2 /* iTunesSearchSwiftUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iTunesSearchSwiftUITests.swift; sourceTree = "<group>"; };
 		88BFF7BB20E8E9FC003042E2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		88BFF7C720E8ED46003042E2 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		A847FE6A229AAB6B00581EEE /* TrackPlayerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackPlayerButton.swift; sourceTree = "<group>"; };
 		A847FE6D229AC20600581EEE /* TrackDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackDownloader.swift; sourceTree = "<group>"; };
 		A85563CF2299831600B729B4 /* StrogateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrogateManager.swift; sourceTree = "<group>"; };
@@ -79,6 +79,8 @@
 		A881DEEB21202F8F00A59892 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		A88940ED2157E4C900D3E6AA /* AlbumTrackCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumTrackCell.swift; sourceTree = "<group>"; };
 		A89695B222AE7CAE00579012 /* AlbumList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumList.swift; sourceTree = "<group>"; };
+		A8C662C022BB89DD00AF5EB3 /* SearchViewMediator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewMediator.swift; sourceTree = "<group>"; };
+		A8C662C222BB94EE00AF5EB3 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		A8DFDA9522A949BE002EE7DD /* ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
 		A8DFDA9922A95384002EE7DD /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -199,8 +201,9 @@
 			children = (
 				A85F06CC22A8267D00F19AFD /* SearchList.swift */,
 				880B4A0E210C8FDF00A80F93 /* SearchCell.swift */,
+				A8C662C022BB89DD00AF5EB3 /* SearchViewMediator.swift */,
 				A85563D122999A9300B729B4 /* SearchViewModel.swift */,
-				88BFF7C720E8ED46003042E2 /* SearchViewController.swift */,
+				A8C662C222BB94EE00AF5EB3 /* SearchViewController.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -364,6 +367,7 @@
 			files = (
 				880B4A0F210C8FDF00A80F93 /* SearchCell.swift in Sources */,
 				A8DFDA9622A949BE002EE7DD /* ImageManager.swift in Sources */,
+				A8C662C322BB94EE00AF5EB3 /* SearchViewController.swift in Sources */,
 				A88940EE2157E4C900D3E6AA /* AlbumTrackCell.swift in Sources */,
 				A85563D02299831600B729B4 /* StrogateManager.swift in Sources */,
 				886DBD0C21077123000A461B /* AlbumTableViewController.swift in Sources */,
@@ -374,8 +378,8 @@
 				A847FE6B229AAB6B00581EEE /* TrackPlayerButton.swift in Sources */,
 				880B4A11210C953F00A80F93 /* AlbumHeaderCell.swift in Sources */,
 				A85F06CD22A8267D00F19AFD /* SearchList.swift in Sources */,
-				88BFF7C820E8ED46003042E2 /* SearchViewController.swift in Sources */,
 				880D2AFD20FC93A400F2E04F /* TrackPreviewAudio.swift in Sources */,
+				A8C662C122BB89DD00AF5EB3 /* SearchViewMediator.swift in Sources */,
 				A8DFDA9A22A95384002EE7DD /* Utils.swift in Sources */,
 				88A41FA320EF98A900017850 /* iTunesItem.swift in Sources */,
 				880B4A13210C98E400A80F93 /* TrackView.swift in Sources */,
