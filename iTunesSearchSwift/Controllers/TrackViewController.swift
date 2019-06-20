@@ -28,7 +28,7 @@ class TrackViewModel : iTunesAlbumDelegate {
     
     func update() {
         presenter.updateView(previewItem)
-        previewAudio = TrackPreviewAudio(url: previewItem.previewUrl, delegate: presenter)
+        previewAudio = TrackPreviewAudio(url: previewItem.previewUrl, delegate: presenter.trackPlayerView!)
         
         //Загрузка из кэша маленькой картинки
         ImageManager.download(path: previewItem.artworkUrl100!) { (image) in
@@ -64,21 +64,16 @@ class TrackViewModel : iTunesAlbumDelegate {
     }
 }
 
-class TrackViewController: UIViewController, PreviewAudioDelegate {
+class TrackViewController: UIViewController {
     
     @IBOutlet weak var trackNameLabel: UILabel!
     @IBOutlet weak var authorNameLabel: UILabel!
     @IBOutlet weak var collectionNameLabel: UILabel!
     @IBOutlet weak var artworkImageView: UIImageView!
-    @IBOutlet weak var trackInfoLabel: UILabel!
-    @IBOutlet weak var progressView: UIProgressView!
-    @IBOutlet weak var playerButton: TrackPlayerButton!
+    
+    @IBOutlet weak var trackPlayerView : TrackPlayerView!
     
     var viewModel : TrackViewModel!
-    
-    @IBAction func didTapPlayerButton(_ sender: TrackPlayerButton) {
-        self.viewModel.previewAudio.didTapButton()
-    }
     
     lazy var rightButton = UIBarButtonItem(
         barButtonSystemItem: .bookmarks, target: self, action: #selector(didTapAlbumButton)
@@ -93,6 +88,7 @@ class TrackViewController: UIViewController, PreviewAudioDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.start(presenter: self)
+        self.trackPlayerView.viewModel = viewModel
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -121,7 +117,7 @@ class TrackViewController: UIViewController, PreviewAudioDelegate {
     }
     
     func updateView(_ item:iTunesItem) {
-        trackInfoLabel?.text = "Загрузить фрагмент"
+        trackPlayerView?.trackInfoLabel?.text = "Загрузить фрагмент"
         trackNameLabel?.text = item.fullTrackNumber + "  " + item.trackName.asStringOrEmpty()
         authorNameLabel?.text = item.artistName
         
@@ -132,25 +128,5 @@ class TrackViewController: UIViewController, PreviewAudioDelegate {
             collectionNameLabel?.text = item.collectionName!
             collectionNameLabel?.font = UIFont.systemFont(ofSize:21)
         }
-    }
-    
-    // MARK: - PreviewAudioDelegate
-    
-    func playerBeginDownloadSong() {
-        trackInfoLabel.text = "Загрузка фрагмента"
-    }
-    
-    func playerBeginPlay() {
-        playerButton.pauseImage()
-    }
-    
-    func playerStopPlay() {
-        playerButton.playImage()
-        playerButton.pulsate()
-    }
-    
-    func playerUpdateData(string:String, float:Float) {
-        trackInfoLabel.text = string
-        progressView.progress = float
     }
 }

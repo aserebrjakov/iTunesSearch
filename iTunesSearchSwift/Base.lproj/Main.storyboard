@@ -63,85 +63,36 @@
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jYz-nM-Jse">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F5S-nB-B8o" customClass="TrackPlayerView" customModule="iTunesSearchSwift" customModuleProvider="target">
                                 <rect key="frame" x="10" y="792" width="394" height="60"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SUq-Pf-3ch" customClass="TrackPlayerButton" customModule="iTunesSearchSwift" customModuleProvider="target">
-                                        <rect key="frame" x="10" y="6" width="48" height="48"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="48" id="fGk-Rc-vcr"/>
-                                            <constraint firstAttribute="height" constant="48" id="fSu-DQ-2jt"/>
-                                        </constraints>
-                                        <state key="normal" image="download"/>
-                                        <state key="highlighted">
-                                            <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="didTapPlayerButton:" destination="HQW-Y2-tvP" eventType="touchUpInside" id="3Wu-20-KAp"/>
-                                        </connections>
-                                    </button>
-                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progressViewStyle="bar" translatesAutoresizingMaskIntoConstraints="NO" id="tjG-gK-Fyv">
-                                        <rect key="frame" x="82" y="47.333333333333371" width="300" height="2.6666666666666643"/>
-                                        <color key="progressTintColor" red="1" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
-                                        <color key="trackTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </progressView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6BW-fO-Hyy">
-                                        <rect key="frame" x="82" y="11" width="46.666666666666657" height="23"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" red="1" green="0.37699577340000001" blue="0.37058153760000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="tjG-gK-Fyv" secondAttribute="trailing" constant="12" id="3kr-Yf-h8m"/>
-                                    <constraint firstAttribute="height" constant="60" id="SoK-Y0-Pv7"/>
-                                    <constraint firstItem="6BW-fO-Hyy" firstAttribute="top" secondItem="jYz-nM-Jse" secondAttribute="top" constant="11" id="e38-jP-13a"/>
-                                    <constraint firstItem="6BW-fO-Hyy" firstAttribute="leading" secondItem="jYz-nM-Jse" secondAttribute="leading" constant="82" id="ebG-iT-SHi"/>
-                                    <constraint firstItem="SUq-Pf-3ch" firstAttribute="leading" secondItem="jYz-nM-Jse" secondAttribute="leading" constant="10" id="jMx-yh-iXi"/>
-                                    <constraint firstItem="tjG-gK-Fyv" firstAttribute="leading" secondItem="6BW-fO-Hyy" secondAttribute="leading" id="smr-xJ-zOW"/>
-                                    <constraint firstAttribute="bottom" secondItem="tjG-gK-Fyv" secondAttribute="bottom" constant="11" id="tnH-CY-Qbo"/>
-                                    <constraint firstItem="SUq-Pf-3ch" firstAttribute="centerY" secondItem="jYz-nM-Jse" secondAttribute="centerY" id="vOH-Vc-vAX"/>
-                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="6BW-fO-Hyy" secondAttribute="trailing" constant="20" symbolic="YES" id="yv1-X9-EuF"/>
+                                    <constraint firstAttribute="height" constant="60" id="tqR-wD-DnP"/>
                                 </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                        <real key="value" value="3"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                        <color key="value" red="1" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Hau-ax-iAE" firstAttribute="top" secondItem="Dqy-nb-32h" secondAttribute="top" constant="20" id="0d6-SL-0Od"/>
-                            <constraint firstItem="jYz-nM-Jse" firstAttribute="top" relation="greaterThanOrEqual" secondItem="vhb-c0-3fy" secondAttribute="bottom" constant="12" id="0yr-1l-tTf"/>
                             <constraint firstItem="Hau-ax-iAE" firstAttribute="leading" secondItem="wp4-LU-aL4" secondAttribute="trailing" constant="20" id="2gp-Gi-cw4"/>
-                            <constraint firstItem="Dqy-nb-32h" firstAttribute="trailing" secondItem="jYz-nM-Jse" secondAttribute="trailing" constant="10" id="38g-gG-8nu"/>
                             <constraint firstItem="wp4-LU-aL4" firstAttribute="width" secondItem="xNG-PU-dnV" secondAttribute="width" multiplier="3/5" id="3Mi-qi-a8y"/>
                             <constraint firstItem="vhb-c0-3fy" firstAttribute="leading" secondItem="7Ym-hN-RyA" secondAttribute="leading" id="3YZ-oz-WGQ"/>
                             <constraint firstItem="wp4-LU-aL4" firstAttribute="centerX" secondItem="Dqy-nb-32h" secondAttribute="centerX" id="7Xs-76-738"/>
                             <constraint firstItem="vhb-c0-3fy" firstAttribute="centerX" secondItem="7Ym-hN-RyA" secondAttribute="centerX" id="B8d-MN-ibB"/>
+                            <constraint firstItem="F5S-nB-B8o" firstAttribute="leading" secondItem="Dqy-nb-32h" secondAttribute="leading" constant="10" id="BDa-Pg-XAD"/>
                             <constraint firstItem="7Ym-hN-RyA" firstAttribute="leading" secondItem="Hau-ax-iAE" secondAttribute="leading" id="CLJ-4v-NCv"/>
                             <constraint firstItem="Dqy-nb-32h" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Hau-ax-iAE" secondAttribute="trailing" constant="20" id="Ewt-RN-pAe"/>
-                            <constraint firstItem="jYz-nM-Jse" firstAttribute="bottom" secondItem="wp4-LU-aL4" secondAttribute="bottom" id="F9T-SX-xnk"/>
-                            <constraint firstItem="Dqy-nb-32h" firstAttribute="bottom" secondItem="jYz-nM-Jse" secondAttribute="bottom" constant="10" id="Odh-7D-nYs"/>
+                            <constraint firstItem="F5S-nB-B8o" firstAttribute="leading" secondItem="Dqy-nb-32h" secondAttribute="leading" constant="10" id="HHW-PB-RSA"/>
+                            <constraint firstItem="F5S-nB-B8o" firstAttribute="centerX" secondItem="Dqy-nb-32h" secondAttribute="centerX" id="Id7-EF-Tpk"/>
                             <constraint firstItem="vhb-c0-3fy" firstAttribute="leading" secondItem="wp4-LU-aL4" secondAttribute="trailing" constant="20" id="SHD-aq-En3"/>
                             <constraint firstItem="Hau-ax-iAE" firstAttribute="top" secondItem="wp4-LU-aL4" secondAttribute="bottom" constant="35" id="WFv-6n-EMF"/>
-                            <constraint firstItem="jYz-nM-Jse" firstAttribute="bottom" secondItem="wp4-LU-aL4" secondAttribute="bottom" priority="998" id="ZVw-Dw-wCd"/>
                             <constraint firstItem="wp4-LU-aL4" firstAttribute="bottom" secondItem="Dqy-nb-32h" secondAttribute="bottom" constant="-20" id="dWR-9G-xvu"/>
-                            <constraint firstItem="jYz-nM-Jse" firstAttribute="leading" secondItem="wp4-LU-aL4" secondAttribute="trailing" constant="20" id="e0W-Lz-hk8"/>
+                            <constraint firstItem="Dqy-nb-32h" firstAttribute="bottom" secondItem="F5S-nB-B8o" secondAttribute="bottom" constant="10" id="eZ2-Q1-22O"/>
                             <constraint firstItem="wp4-LU-aL4" firstAttribute="leading" secondItem="Dqy-nb-32h" secondAttribute="leading" constant="20" id="gKq-mB-Hna"/>
                             <constraint firstItem="7Ym-hN-RyA" firstAttribute="leading" secondItem="wp4-LU-aL4" secondAttribute="trailing" constant="20" id="hLd-ZA-tdz"/>
                             <constraint firstItem="Dqy-nb-32h" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="vhb-c0-3fy" secondAttribute="trailing" constant="20" id="ilr-zo-bhh"/>
                             <constraint firstItem="7Ym-hN-RyA" firstAttribute="top" secondItem="Hau-ax-iAE" secondAttribute="bottom" constant="20" id="rbE-qt-agf"/>
                             <constraint firstItem="wp4-LU-aL4" firstAttribute="top" secondItem="Dqy-nb-32h" secondAttribute="top" constant="20" id="ryz-Hk-kQ3"/>
-                            <constraint firstItem="jYz-nM-Jse" firstAttribute="leading" secondItem="Dqy-nb-32h" secondAttribute="leading" constant="10" id="u3h-Vl-pqb"/>
                             <constraint firstItem="Dqy-nb-32h" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="7Ym-hN-RyA" secondAttribute="trailing" constant="20" id="vrf-J5-dBs"/>
                             <constraint firstItem="7Ym-hN-RyA" firstAttribute="centerX" secondItem="Hau-ax-iAE" secondAttribute="centerX" id="wN2-J6-iXz"/>
                             <constraint firstItem="vhb-c0-3fy" firstAttribute="top" secondItem="7Ym-hN-RyA" secondAttribute="bottom" constant="20" id="yTG-se-i3I"/>
@@ -158,14 +109,10 @@
                                 <exclude reference="hLd-ZA-tdz"/>
                                 <exclude reference="3YZ-oz-WGQ"/>
                                 <exclude reference="SHD-aq-En3"/>
-                                <exclude reference="F9T-SX-xnk"/>
-                                <exclude reference="ZVw-Dw-wCd"/>
-                                <exclude reference="e0W-Lz-hk8"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=compact-widthClass=compact">
                             <mask key="constraints">
-                                <exclude reference="Odh-7D-nYs"/>
                                 <exclude reference="3Mi-qi-a8y"/>
                                 <exclude reference="7Xs-76-738"/>
                                 <include reference="dWR-9G-xvu"/>
@@ -178,14 +125,10 @@
                                 <include reference="hLd-ZA-tdz"/>
                                 <include reference="3YZ-oz-WGQ"/>
                                 <include reference="SHD-aq-En3"/>
-                                <include reference="F9T-SX-xnk"/>
-                                <include reference="e0W-Lz-hk8"/>
-                                <exclude reference="u3h-Vl-pqb"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=compact-widthClass=regular">
                             <mask key="constraints">
-                                <exclude reference="Odh-7D-nYs"/>
                                 <exclude reference="3Mi-qi-a8y"/>
                                 <exclude reference="7Xs-76-738"/>
                                 <include reference="dWR-9G-xvu"/>
@@ -196,14 +139,10 @@
                                 <exclude reference="za7-ZX-hzb"/>
                                 <include reference="hLd-ZA-tdz"/>
                                 <include reference="SHD-aq-En3"/>
-                                <include reference="F9T-SX-xnk"/>
-                                <include reference="e0W-Lz-hk8"/>
-                                <exclude reference="u3h-Vl-pqb"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=regular">
                             <mask key="constraints">
-                                <exclude reference="Odh-7D-nYs"/>
                                 <exclude reference="3Mi-qi-a8y"/>
                                 <exclude reference="7Xs-76-738"/>
                                 <include reference="dWR-9G-xvu"/>
@@ -214,9 +153,6 @@
                                 <exclude reference="za7-ZX-hzb"/>
                                 <include reference="hLd-ZA-tdz"/>
                                 <include reference="SHD-aq-En3"/>
-                                <include reference="F9T-SX-xnk"/>
-                                <include reference="e0W-Lz-hk8"/>
-                                <exclude reference="u3h-Vl-pqb"/>
                             </mask>
                         </variation>
                     </view>
@@ -224,10 +160,8 @@
                         <outlet property="artworkImageView" destination="wp4-LU-aL4" id="Rn2-gU-ouY"/>
                         <outlet property="authorNameLabel" destination="7Ym-hN-RyA" id="hkU-5a-AOd"/>
                         <outlet property="collectionNameLabel" destination="vhb-c0-3fy" id="jjg-Gh-fub"/>
-                        <outlet property="playerButton" destination="SUq-Pf-3ch" id="4CH-qC-qFL"/>
-                        <outlet property="progressView" destination="tjG-gK-Fyv" id="6Ch-9e-d1T"/>
-                        <outlet property="trackInfoLabel" destination="6BW-fO-Hyy" id="5Mv-aE-p3E"/>
                         <outlet property="trackNameLabel" destination="Hau-ax-iAE" id="CjM-BR-n26"/>
+                        <outlet property="trackPlayerView" destination="F5S-nB-B8o" id="eVt-n8-MmW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aDl-em-yGg" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -388,7 +322,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="download" width="46" height="46"/>
         <image name="noArtwork" width="100" height="100"/>
     </resources>
 </document>
