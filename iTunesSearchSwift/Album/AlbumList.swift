@@ -40,7 +40,7 @@ class AlbumList<T> {
     //
     
     private func load(list:[iTunesItem]) {
-        print("В альбоме получено \(list.count) треков")
+        print("В альбоме получено \(list.count - 1) треков")
         
         if list.count == 0 {
             return

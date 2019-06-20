@@ -8,6 +8,20 @@
 
 import UIKit
 
+struct SearchCellViewModel {
+    let trackName : String?
+    let artistName : String?
+    let trackLenght : String?
+    let artworkUrl : String?
+    
+    init(_ item:iTunesItem) {
+        trackName = item.trackName
+        artistName = item.artistName
+        trackLenght = item.trackLenght()
+        artworkUrl = item.artworkUrl100
+    }
+}
+
 class SearchCell: UITableViewCell {
     @IBOutlet var artworkImageView: UIImageView!
     @IBOutlet var songNameLabel: UILabel!
@@ -30,16 +44,14 @@ class SearchCell: UITableViewCell {
         return 65
     }
     
-    func configureCell(_ item: iTunesItem!) {
+    func configureCell(_ cellModel: SearchCellViewModel) {
         
-        guard let item = item else { return }
+        self.songNameLabel?.text = cellModel.trackName
+        self.songAuthorLabel?.text = cellModel.artistName
+        self.songTimeLabel?.text = cellModel.trackLenght
         
-        self.songNameLabel?.text = item.trackName
-        self.songAuthorLabel?.text = item.artistName
-        self.songTimeLabel?.text = item.trackLenght()
-
         self.artworkImageView?.image = ImageManager.noArtworkImage;
-        ImageManager.download(path: item.artworkUrl100!) { (image) in
+        ImageManager.download(path: cellModel.artworkUrl) { (image) in
             self.artworkImageView.image = image
             self.layoutIfNeeded()
         }

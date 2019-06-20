@@ -48,15 +48,20 @@ class ImageManager: NSObject{
     
     static let noArtworkImage = UIImage(named:"noArtwork")
     
-    class func download(path:String, block:@escaping (_ image:UIImage?) -> ()) {
+    class func download(path:String?, block:@escaping (_ image:UIImage?) -> ()) {
         
-        guard let url = URL(string:path) else {
+        guard let downloadPath = path else {
+            print("Ошибка URL: Путь к изображению отсутсвует")
+            return
+        }
+        
+        guard let url = URL(string:downloadPath) else {
             print("Ошибка URL: Путь к изображению не явлется валидным URL")
             return
         }
         
         //проверяем есть ли закешированное изображение, если есть - возвращаем его
-        if let imageFromCache = ImageCache.imageForKey(path as NSString) {
+        if let imageFromCache = ImageCache.imageForKey(downloadPath as NSString) {
             DispatchQueue.main.async {
                 block(imageFromCache)
             }
@@ -79,7 +84,7 @@ class ImageManager: NSObject{
             }
             
             //добавляем закачанное и распарсенное изоображение в кэш
-            ImageCache.addImageForKey(path as NSString, image: image)
+            ImageCache.addImageForKey(downloadPath as NSString, image: image)
             
             DispatchQueue.main.async {
                 block(image)
