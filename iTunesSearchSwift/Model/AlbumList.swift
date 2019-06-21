@@ -27,18 +27,6 @@ class AlbumList<T> {
         return items.count
     }
     
-    var albumName: String {
-        if self.count > 0 {
-            return "AAAAA"//String(describing:"Альбом: \(self[0].collectionName!)")
-        }
-        return ""
-    }
-    
-    //    var trackId: Int? {
-    //       // return DataManager.shared.previewItem.trackId
-    //    }
-    //
-    
     private func load(list:[iTunesItem]) {
         print("В альбоме получено \(list.count - 1) треков")
         
@@ -56,8 +44,6 @@ class AlbumList<T> {
         self.delegate?.albumDidLoad()
     }
     
-    public typealias iTunesData = iTunesList<iTunesItem>
-    
     lazy var session: URLSession = {
         return URLSession(configuration: .default)
     }()
@@ -70,7 +56,6 @@ class AlbumList<T> {
         let url = URL(string:path)
         return url
     }
-    
     
     func albumSearchPreload(_ collectionId:Int!) {
         guard let collectId = collectionId else {return}
@@ -93,7 +78,6 @@ class AlbumList<T> {
             } catch (let error){
                 print("Ошибка: \(error.localizedDescription)")
             }
-            
             
             self.load(list: list.results)
         })

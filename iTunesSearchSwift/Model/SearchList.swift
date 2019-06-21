@@ -14,6 +14,8 @@ protocol iTunesSearchDelegate: AnyObject {
     func showList()
 }
 
+typealias iTunesData = iTunesList<iTunesItem>
+
 class SearchList<T> {
     
     var items: [T] = []
@@ -70,9 +72,6 @@ class SearchList<T> {
         isUpdate = false
         delegate?.showList()
     }
-    
-    
-    public typealias iTunesData = iTunesList<iTunesItem>
     
     func clean() {
         items = []

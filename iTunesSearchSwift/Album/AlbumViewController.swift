@@ -8,57 +8,9 @@
 
 import UIKit
 
-
-class AlbumViewModel {
-    
-    var list = [iTunesItem]()
-    var trackId: Int
-    var presenter: AlbumViewController!
-    var backClosure: ((_ item:iTunesItem)  -> ())?
-    
-    init(_ list: [iTunesItem], track: Int?) {
-        self.list = list
-        self.trackId = track ?? 0
-    }
-    
-    func start(presenter : AlbumViewController) {
-        self.presenter = presenter
-        self.presenter.title = albumName
-    }
-    
-    var albumName: String {
-        let first = list[0]
-        return String(describing:"Альбом: \(first.collectionName!)")
-    }
-    
-    func height(_ index : Int) -> CGFloat {
-        return index == 0 ? AlbumHeaderCell.height() : AlbumTrackCell.height()
-    }
-    
-    func sections () -> Int {
-        return 1
-    }
-    
-    func count () -> Int {
-        return list.count
-    }
-    
-    func item(_ index : Int) -> iTunesItem {
-        return list[index]
-    }
-    
-    func selectItem(_ index : Int) {
-        let item = list[index]
-        self.backClosure!(item)
-    }
-}
-
 class AlbumViewController: UITableViewController {
     
     var viewModel:AlbumViewModel!
-    
-    private let cellTrackIdentifier: String = "albumTrackCell"
-    private let cellHeaderIdentifier: String = "albumHeaderCell"
     
     override func viewDidLoad() {
         super.viewDidLoad();
@@ -81,6 +33,9 @@ class AlbumViewController: UITableViewController {
         return viewModel.height(indexPath.row)
     }
     
+    private let cellTrackIdentifier: String = "albumTrackCell"
+    private let cellHeaderIdentifier: String = "albumHeaderCell"
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let item = viewModel.item(indexPath.row)
@@ -97,7 +52,6 @@ class AlbumViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-     //   DataManager.loadPreview(item: list[indexPath.row])
         self.viewModel.selectItem(indexPath.row)
         self.navigationController?.popViewController(animated: true);
     }
