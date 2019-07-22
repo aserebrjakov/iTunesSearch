@@ -49,6 +49,6 @@ class AlbumViewModel {
     
     func selectItem(_ index : Int) {
         let item = list[index]
-        self.backClosure!(item)
+        backClosure!(item)
     }
 }

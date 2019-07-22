@@ -9,8 +9,9 @@
 import Foundation
 import UIKit
 
-class TrackViewModel : iTunesAlbumDelegate {
-    var list = AlbumList<iTunesList<iTunesItem>>()
+class TrackViewModel {
+    var service = AlbumService()
+    var items: [iTunesItem]
     var previewItem: iTunesItem
     var previewAudio: TrackPreviewAudio!
     var presenter: TrackViewController!
@@ -19,17 +20,25 @@ class TrackViewModel : iTunesAlbumDelegate {
     
     init(item: iTunesItem) {
         self.previewItem = item
+        self.items = []
     }
     
     func start(presenter : TrackViewController) {
         self.presenter = presenter
-        list.delegate = self
-        list.albumSearchPreload(previewItem.collectionId)
+        
+        service.albumPreload(previewItem.collectionId, completion:{ (list) in
+            
+            guard let albumList = list, albumList.count > 0 else {
+                return
+            }
+            
+            self.albumDidLoad(list: albumList)
+        })
     }
     
     func update() {
-        presenter.updateView(previewItem)
-        previewAudio = TrackPreviewAudio(url: previewItem.previewUrl, delegate: presenter.trackPlayerView!)
+        self.presenter.updateView(previewItem)
+        self.previewAudio = TrackPreviewAudio(url: previewItem.previewUrl, delegate: presenter.trackPlayerView!)
         
         //Загрузка из кэша маленькой картинки
         ImageManager.download(path: previewItem.artworkUrl100!) { (image) in
@@ -47,17 +56,17 @@ class TrackViewModel : iTunesAlbumDelegate {
         previewAudio.audioDisappear()
     }
     
-    // MARK: - Model delegate
+    // MARK: - Album -
     
-    func albumDidLoad() {
-        DispatchQueue.main.async {
-            if self.list.count == 0 {return}
-            self.presenter.navigationItem.rightBarButtonItem = self.presenter.rightButton
+    func albumDidLoad(list:[iTunesItem]) {
+        list.forEach { item in
+            items.append(item)
         }
+        presenter.showRightButton()
     }
     
     func albumViewModel() -> AlbumViewModel {
-        let vm = AlbumViewModel(list.items, track:previewItem.trackId)
+        let vm = AlbumViewModel(items, track:previewItem.trackId)
         vm.backClosure =  { (item: iTunesItem) -> () in
             self.previewItem = item
         }

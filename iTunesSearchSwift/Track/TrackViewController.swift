@@ -32,13 +32,13 @@ class TrackViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.start(presenter: self)
-        self.trackPlayerView.viewModel = viewModel
+        trackPlayerView.viewModel = viewModel
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel.update()
-        self.updateNavigationBar()
+        updateNavigationBar()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -71,6 +71,12 @@ class TrackViewController: UIViewController {
         } else {
             collectionNameLabel?.text = item.collectionName!
             collectionNameLabel?.font = UIFont.systemFont(ofSize:21)
+        }
+    }
+    
+    func showRightButton() {
+        DispatchQueue.main.async {
+            self.navigationItem.rightBarButtonItem = self.rightButton
         }
     }
 }

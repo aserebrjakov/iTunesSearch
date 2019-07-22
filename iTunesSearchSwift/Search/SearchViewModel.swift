@@ -11,13 +11,16 @@ import UIKit
 
 class SearchViewModel: iTunesSearchDelegate {
     
-    var list : SearchList = SearchList<iTunesItem>()
+    var items: [iTunesItem] = []
+    var isUpdate: Bool = false
+    
+    var service : SearchService = SearchService()
     var presenter : SearchViewController?
     var messageView : MessageViewMediator = MessageViewMediator()
     var mediator : SearchViewMediator!
     
     func start (presenter : SearchViewController) {
-        list.delegate = self
+        service.delegate = self
         self.presenter = presenter
         self.mediator = SearchViewMediator(viewModel: self)
         search("")
@@ -34,29 +37,55 @@ class SearchViewModel: iTunesSearchDelegate {
                 return
             }
             
-            self.list.beginSearch(search: text)
+            self.service.beginSearch(search: text)
         }
+    }
+    
+    func updateLast() {
+        if isUpdate {return}
+        isUpdate = true
+        
+        service.updateSearch(offset: items.count)
+    }
+    
+    func cleanList() {
+        items = []
     }
     
     // MARK: - iTunesSearchDelegate
     
-    func showMessageList(_ message:String) {
-        self.list.clean()
-        self.messageView.message = message
-        self.presenter?.reload(delegate: self.messageView)
-        Utils.stopNetworkActivity(true)
-    }
     
-    func showList () {
+    func createList(_ search:String, list:[iTunesItem]) {
+        cleanList()
+        list.forEach { item in
+            items.append(item)
+        }
+
         self.presenter?.reload(delegate: self.mediator)
-        Utils.stopNetworkActivity(true)
     }
     
-    func updateError(_ message: String) {
-        print(message)
-        list.isUpdate = false
-        Utils.stopNetworkActivity(true)
+    func updateList(_ search:String, list:[iTunesItem]) {
+        
+        list.forEach { (item) in
+            items.append(item)
+        }
+        
+        isUpdate = false
+
+        self.presenter?.reload(delegate: self.mediator)
     }
+    
+    func updateEnd() {
+        isUpdate = false
+    }
+    
+    func showMessageList(_ message:String) {
+        cleanList()
+        self.messageView.message = message
+        
+        self.presenter?.reload(delegate: self.messageView)
+    }
+    
     
     // MARK: -
     
@@ -69,20 +98,21 @@ class SearchViewModel: iTunesSearchDelegate {
     }
     
     func count () -> Int {
-        return list.count
+        return items.count
     }
     
     func item(_ index : Int) -> iTunesItem {
-        return list[index]
+        return items[index]
     }
     
     func model(_ index : Int) -> SearchCellViewModel {
-        return SearchCellViewModel(list[index])
+        let item = items[index]
+        return SearchCellViewModel(item)
     }
     
     func checkLast (_ index : Int) {
         if index == count() - 1 {
-            self.list.updateSearch()
+            updateLast()
         }
     }
     
@@ -91,7 +121,5 @@ class SearchViewModel: iTunesSearchDelegate {
         presenter?.segue(item: item)
     }
 }
-
-// MARK: -
 
 
