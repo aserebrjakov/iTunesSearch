@@ -25,12 +25,12 @@
 		A847FE6E229AC20600581EEE /* TrackDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A847FE6D229AC20600581EEE /* TrackDownloader.swift */; };
 		A85563D02299831600B729B4 /* StrogateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85563CF2299831600B729B4 /* StrogateManager.swift */; };
 		A85563D222999A9300B729B4 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85563D122999A9300B729B4 /* SearchViewModel.swift */; };
-		A85F06CD22A8267D00F19AFD /* SearchList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85F06CC22A8267D00F19AFD /* SearchList.swift */; };
+		A85F06CD22A8267D00F19AFD /* SearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85F06CC22A8267D00F19AFD /* SearchService.swift */; };
 		A8804DA522E5ED66002E5F6D /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8804DA422E5ED66002E5F6D /* NetworkManager.swift */; };
 		A8804DA822E600A5002E5F6D /* iTunesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8804DA722E600A5002E5F6D /* iTunesList.swift */; };
 		A881DEEC21202F9000A59892 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = A881DEEB21202F8F00A59892 /* README.md */; };
 		A88940EE2157E4C900D3E6AA /* AlbumTrackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A88940ED2157E4C900D3E6AA /* AlbumTrackCell.swift */; };
-		A89695B322AE7CAE00579012 /* AlbumList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A89695B222AE7CAE00579012 /* AlbumList.swift */; };
+		A89695B322AE7CAE00579012 /* AlbumService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A89695B222AE7CAE00579012 /* AlbumService.swift */; };
 		A8C662C122BB89DD00AF5EB3 /* SearchViewMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C662C022BB89DD00AF5EB3 /* SearchViewMediator.swift */; };
 		A8C662C322BB94EE00AF5EB3 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C662C222BB94EE00AF5EB3 /* SearchViewController.swift */; };
 		A8C662C522BBA17400AF5EB3 /* TrackPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C662C422BBA17400AF5EB3 /* TrackPlayerView.swift */; };
@@ -81,12 +81,12 @@
 		A847FE6D229AC20600581EEE /* TrackDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackDownloader.swift; sourceTree = "<group>"; };
 		A85563CF2299831600B729B4 /* StrogateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrogateManager.swift; sourceTree = "<group>"; };
 		A85563D122999A9300B729B4 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
-		A85F06CC22A8267D00F19AFD /* SearchList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchList.swift; sourceTree = "<group>"; };
+		A85F06CC22A8267D00F19AFD /* SearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchService.swift; sourceTree = "<group>"; };
 		A8804DA422E5ED66002E5F6D /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		A8804DA722E600A5002E5F6D /* iTunesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iTunesList.swift; sourceTree = "<group>"; };
 		A881DEEB21202F8F00A59892 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		A88940ED2157E4C900D3E6AA /* AlbumTrackCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumTrackCell.swift; sourceTree = "<group>"; };
-		A89695B222AE7CAE00579012 /* AlbumList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumList.swift; sourceTree = "<group>"; };
+		A89695B222AE7CAE00579012 /* AlbumService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumService.swift; sourceTree = "<group>"; };
 		A8C662C022BB89DD00AF5EB3 /* SearchViewMediator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewMediator.swift; sourceTree = "<group>"; };
 		A8C662C222BB94EE00AF5EB3 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		A8C662C422BBA17400AF5EB3 /* TrackPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackPlayerView.swift; sourceTree = "<group>"; };
@@ -124,8 +124,6 @@
 			isa = PBXGroup;
 			children = (
 				88A41FA220EF98A900017850 /* iTunesItem.swift */,
-				A85F06CC22A8267D00F19AFD /* SearchList.swift */,
-				A89695B222AE7CAE00579012 /* AlbumList.swift */,
 				A8804DA722E600A5002E5F6D /* iTunesList.swift */,
 			);
 			path = Model;
@@ -212,6 +210,7 @@
 		A85563D32299A04300B729B4 /* Search */ = {
 			isa = PBXGroup;
 			children = (
+				A85F06CC22A8267D00F19AFD /* SearchService.swift */,
 				880B4A0E210C8FDF00A80F93 /* SearchCell.swift */,
 				A8C662C022BB89DD00AF5EB3 /* SearchViewMediator.swift */,
 				A85563D122999A9300B729B4 /* SearchViewModel.swift */,
@@ -234,6 +233,7 @@
 		A8DFDA9722A94AEE002EE7DD /* Album */ = {
 			isa = PBXGroup;
 			children = (
+				A89695B222AE7CAE00579012 /* AlbumService.swift */,
 				880B4A10210C953F00A80F93 /* AlbumHeaderCell.swift */,
 				A88940ED2157E4C900D3E6AA /* AlbumTrackCell.swift */,
 				A80A54E022BD1C7C00AB1482 /* AlbumViewModel.swift */,
@@ -402,10 +402,10 @@
 				A847FE6E229AC20600581EEE /* TrackDownloader.swift in Sources */,
 				88B3D5E120EE7BC60075FAAA /* TrackViewController.swift in Sources */,
 				A85563D222999A9300B729B4 /* SearchViewModel.swift in Sources */,
-				A89695B322AE7CAE00579012 /* AlbumList.swift in Sources */,
+				A89695B322AE7CAE00579012 /* AlbumService.swift in Sources */,
 				A847FE6B229AAB6B00581EEE /* TrackPlayerButton.swift in Sources */,
 				880B4A11210C953F00A80F93 /* AlbumHeaderCell.swift in Sources */,
-				A85F06CD22A8267D00F19AFD /* SearchList.swift in Sources */,
+				A85F06CD22A8267D00F19AFD /* SearchService.swift in Sources */,
 				A8C662C522BBA17400AF5EB3 /* TrackPlayerView.swift in Sources */,
 				880D2AFD20FC93A400F2E04F /* TrackPreviewAudio.swift in Sources */,
 				A8C662C122BB89DD00AF5EB3 /* SearchViewMediator.swift in Sources */,
